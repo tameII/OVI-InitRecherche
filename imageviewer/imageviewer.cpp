@@ -25,27 +25,29 @@
 #endif
 #endif
 
-//! [0]
-ImageViewer::ImageViewer(QWidget *parent)
-   : QMainWindow(parent), imageLabel(new QLabel)
-   , scrollArea(new QScrollArea)
+ImageViewer::ImageViewer(QWidget *parent) : QMainWindow(parent), imageLabel(new QLabel), scrollArea(new QScrollArea)
 {
+    QPalette pal = palette();
+
+    // set black background
+    pal.setColor(QPalette::Background, Qt::white);
+
+//    createActions();
+
     imageLabel->setBackgroundRole(QPalette::Base);
     imageLabel->setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Ignored);
     imageLabel->setScaledContents(true);
+
+    imageLabel->setAutoFillBackground(true);
+    imageLabel->setPalette(pal);
+    imageLabel->show();
 
     scrollArea->setBackgroundRole(QPalette::Dark);
     scrollArea->setWidget(imageLabel);
     scrollArea->setVisible(false);
     setCentralWidget(scrollArea);
 
-    createActions();
-
-    resize(QGuiApplication::primaryScreen()->availableSize() * 3 / 5);
 }
-
-//! [0]
-//! [2]
 
 bool ImageViewer::loadFile(const QString &fileName)
 {
@@ -58,7 +60,6 @@ bool ImageViewer::loadFile(const QString &fileName)
                                  .arg(QDir::toNativeSeparators(fileName), reader.errorString()));
         return false;
     }
-//! [2]
 
     setImage(newImage);
 
@@ -76,7 +77,6 @@ void ImageViewer::setImage(const QImage &newImage)
     if (image.colorSpace().isValid())
         image.convertToColorSpace(QColorSpace::SRgb);
     imageLabel->setPixmap(QPixmap::fromImage(image));
-//! [4]
     scaleFactor = 1.0;
 
     scrollArea->setVisible(true);
@@ -87,8 +87,6 @@ void ImageViewer::setImage(const QImage &newImage)
     if (!fitToWindowAct->isChecked())
         imageLabel->adjustSize();
 }
-
-//! [4]
 
 bool ImageViewer::saveFile(const QString &fileName)
 {
@@ -104,8 +102,6 @@ bool ImageViewer::saveFile(const QString &fileName)
     statusBar()->showMessage(message);
     return true;
 }
-
-//! [1]
 
 static void initializeImageFileDialog(QFileDialog &dialog, QFileDialog::AcceptMode acceptMode)
 {
@@ -136,7 +132,6 @@ void ImageViewer::open()
 
     while (dialog.exec() == QDialog::Accepted && !loadFile(dialog.selectedFiles().first())) {}
 }
-//! [1]
 
 void ImageViewer::saveAs()
 {
@@ -146,15 +141,11 @@ void ImageViewer::saveAs()
     while (dialog.exec() == QDialog::Accepted && !saveFile(dialog.selectedFiles().first())) {}
 }
 
-//! [5]
 void ImageViewer::print()
-//! [5] //! [6]
 {
     Q_ASSERT(imageLabel->pixmap());
 #if QT_CONFIG(printdialog)
-//! [6] //! [7]
     QPrintDialog dialog(&printer, this);
-//! [7] //! [8]
     if (dialog.exec()) {
         QPainter painter(&printer);
         QRect rect = painter.viewport();
@@ -166,7 +157,6 @@ void ImageViewer::print()
     }
 #endif
 }
-//! [8]
 
 void ImageViewer::copy()
 {
@@ -207,7 +197,6 @@ void ImageViewer::paste()
 
 //! [9]
 void ImageViewer::zoomIn()
-//! [9] //! [10]
 {
     scaleImage(1.25);
 }
@@ -217,18 +206,13 @@ void ImageViewer::zoomOut()
     scaleImage(0.8);
 }
 
-//! [10] //! [11]
 void ImageViewer::normalSize()
-//! [11] //! [12]
 {
     imageLabel->adjustSize();
     scaleFactor = 1.0;
 }
-//! [12]
 
-//! [13]
 void ImageViewer::fitToWindow()
-//! [13] //! [14]
 {
     bool fitToWindow = fitToWindowAct->isChecked();
     scrollArea->setWidgetResizable(fitToWindow);
@@ -236,12 +220,8 @@ void ImageViewer::fitToWindow()
         normalSize();
     updateActions();
 }
-//! [14]
 
-
-//! [15]
 void ImageViewer::about()
-//! [15] //! [16]
 {
     QMessageBox::about(this, tr("About Image Viewer"),
             tr("<p>The <b>Image Viewer</b> example shows how to combine QLabel "
@@ -257,11 +237,8 @@ void ImageViewer::about()
                "zooming and scaling features. </p><p>In addition the example "
                "shows how to use QPainter to print an image.</p>"));
 }
-//! [16]
 
-//! [17]
-void ImageViewer::createActions()
-//! [17] //! [18]
+ void ImageViewer::createActions()
 {
     QMenu *fileMenu = menuBar()->addMenu(tr("&File"));
 
@@ -315,11 +292,8 @@ void ImageViewer::createActions()
     helpMenu->addAction(tr("&About"), this, &ImageViewer::about);
     helpMenu->addAction(tr("About &Qt"), &QApplication::aboutQt);
 }
-//! [18]
 
-//! [21]
 void ImageViewer::updateActions()
-//! [21] //! [22]
 {
     saveAsAct->setEnabled(!image.isNull());
     copyAct->setEnabled(!image.isNull());
@@ -327,11 +301,8 @@ void ImageViewer::updateActions()
     zoomOutAct->setEnabled(!fitToWindowAct->isChecked());
     normalSizeAct->setEnabled(!fitToWindowAct->isChecked());
 }
-//! [22]
 
-//! [23]
 void ImageViewer::scaleImage(double factor)
-//! [23] //! [24]
 {
     Q_ASSERT(imageLabel->pixmap());
     scaleFactor *= factor;
@@ -343,13 +314,9 @@ void ImageViewer::scaleImage(double factor)
     zoomInAct->setEnabled(scaleFactor < 3.0);
     zoomOutAct->setEnabled(scaleFactor > 0.333);
 }
-//! [24]
 
-//! [25]
 void ImageViewer::adjustScrollBar(QScrollBar *scrollBar, double factor)
-//! [25] //! [26]
 {
     scrollBar->setValue(int(factor * scrollBar->value()
                             + ((factor - 1) * scrollBar->pageStep()/2)));
 }
-//! [26]

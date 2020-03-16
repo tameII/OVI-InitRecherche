@@ -23,6 +23,8 @@ class ImageViewer : public QMainWindow
 public:
     ImageViewer(QWidget *parent = nullptr);
     bool loadFile(const QString &);
+    void createActions();
+
 
 private slots:
     void open();
@@ -37,7 +39,6 @@ private slots:
     void about();
 
 private:
-    void createActions();
     void createMenus();
     void updateActions();
     bool saveFile(const QString &fileName);
@@ -62,6 +63,5 @@ private:
     QAction *normalSizeAct;
     QAction *fitToWindowAct;
 };
-//! [0]
 
 #endif

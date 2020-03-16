@@ -33,6 +33,7 @@ add_executable(DisplayImage
     imageviewer.cpp
     main.cpp
     treeviewer.cpp
+    mainview.cpp
 )
 
 qt5_use_modules(DisplayImage Widgets)
