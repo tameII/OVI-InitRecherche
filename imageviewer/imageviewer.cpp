@@ -17,6 +17,9 @@
 #include <QScrollBar>
 #include <QStandardPaths>
 #include <QStatusBar>
+#include<QDebug>
+
+
 
 #if defined(QT_PRINTSUPPORT_LIB)
 #include <QtPrintSupport/qtprintsupportglobal.h>
@@ -29,19 +32,54 @@
 ImageViewer::ImageViewer(QWidget *parent)
    : QMainWindow(parent), imageLabel(new QLabel)
    , scrollArea(new QScrollArea)
-{
-    imageLabel->setBackgroundRole(QPalette::Base);
-    imageLabel->setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Ignored);
-    imageLabel->setScaledContents(true);
 
+
+{
+   // imageLabel->setBackgroundRole(QPalette::Base);
+    //imageLabel->setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Ignored);
+  //  imageLabel->setScaledContents(true);
+    nbFiles = 0;
+    files = listAllFiles("../resources");
     scrollArea->setBackgroundRole(QPalette::Dark);
-    scrollArea->setWidget(imageLabel);
-    scrollArea->setVisible(false);
+    //scrollArea->setWidget(imageLabel);
+    scrollArea->setVisible(true);
     setCentralWidget(scrollArea);
+    resize(QGuiApplication::primaryScreen()->availableSize() * 3 / 5);
+
+    printf("TAILLE FENETRE %d\n", scrollArea->size().width());
+qInfo() << "TAILLE FENETRE"<<scrollArea->size().width();
+
+scrollArea->resize(10000,10000);
 
     createActions();
 
-    resize(QGuiApplication::primaryScreen()->availableSize() * 3 / 5);
+
+
+
+
+    box = new QGridLayout;
+
+    //QVBoxLayout* layout = new QVBoxLayout;
+    slider = new QSlider(Qt::Horizontal, scrollArea);
+    fileName = new QLabel(scrollArea);
+    fileName->setText(*files[0]);
+    box->addWidget(fileName,0,0);
+    box->addWidget(slider,1,0);
+    scrollArea->setLayout(box);
+    //layout->addWidget(fileName);
+    //layout->addWidget(slider);
+    //box->setLayout(layout);
+    //setCentralWidget(box);
+
+    //slider->setParent(box);
+
+    //scrollArea->setWidget(slider);
+
+
+
+
+    slider->setRange(0, nbFiles-1);
+    connect(slider, &QSlider::valueChanged, this, &ImageViewer::setImage);
 }
 
 //! [0]
@@ -60,7 +98,7 @@ bool ImageViewer::loadFile(const QString &fileName)
     }
 //! [2]
 
-    setImage(newImage);
+    //setImage(newImage);
 
     setWindowFilePath(fileName);
 
@@ -70,9 +108,9 @@ bool ImageViewer::loadFile(const QString &fileName)
     return true;
 }
 
-void ImageViewer::setImage(const QImage &newImage)
+void ImageViewer::setImage(int num)
 {
-    image = newImage;
+    /*image = newImage;
     if (image.colorSpace().isValid())
         image.convertToColorSpace(QColorSpace::SRgb);
     imageLabel->setPixmap(QPixmap::fromImage(image));
@@ -86,6 +124,8 @@ void ImageViewer::setImage(const QImage &newImage)
 
     if (!fitToWindowAct->isChecked())
         imageLabel->adjustSize();
+        */
+    fileName->setText(*files[num]);
 }
 
 //! [4]
@@ -196,7 +236,7 @@ void ImageViewer::paste()
     if (newImage.isNull()) {
         statusBar()->showMessage(tr("No image in clipboard"));
     } else {
-        setImage(newImage);
+        //setImage(newImage);
         setWindowFilePath(QString());
         const QString message = tr("Obtained image from clipboard, %1x%2, Depth: %3")
             .arg(newImage.width()).arg(newImage.height()).arg(newImage.depth());
@@ -353,3 +393,56 @@ void ImageViewer::adjustScrollBar(QScrollBar *scrollBar, double factor)
                             + ((factor - 1) * scrollBar->pageStep()/2)));
 }
 //! [26]
+
+
+QString** ImageViewer::listAllFiles(char * filename){
+
+    DIR *d;
+
+    struct dirent *dir;
+
+    d = opendir(filename);
+    QString ** q;
+    if (d)
+
+    {
+
+        while ((dir = readdir(d)) != NULL)
+
+        {
+            std::string dname = dir->d_name;
+            if(dname.compare(".") != 0 && dname.compare("..") != 0){
+                nbFiles++;
+            }
+        }
+
+        closedir(d);
+
+    }
+
+    d = opendir(filename);
+
+    q = new QString* [nbFiles];
+    int i = 0;
+    if (d)
+
+    {
+
+        while ((dir = readdir(d)) != NULL)
+
+        {
+            std::string dname = dir->d_name;
+            if(dname.compare(".") != 0 && dname.compare("..") != 0){
+                q[i] = new QString(dir->d_name);
+                i++;
+            }
+
+        }
+
+        closedir(d);
+
+    }
+
+    printf("nbfiles = %d\n", nbFiles);
+    return q;
+}

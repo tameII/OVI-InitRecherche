@@ -3,8 +3,11 @@ cmake_minimum_required(VERSION 3.10.2)
 project(DisplayImage)
 
 find_package(ITK REQUIRED)
+find_package(VTK REQUIRED)
+
 
 include(${ITK_USE_FILE})
+include(${VTK_USE_FILE})
 
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
@@ -33,11 +36,12 @@ add_executable(DisplayImage
     imageviewer.cpp
     main.cpp
     treeviewer.cpp
+
 )
 
 qt5_use_modules(DisplayImage Widgets)
 
-target_link_libraries(DisplayImage ${ITK_LIBRARIES} ${Qt5Widgets_LIBRARIES} ${Qt5PrintSupport_LIBRARIES})
+target_link_libraries(DisplayImage ${ITK_LIBRARIES} ${VTK_LIBRARIES} ${Qt5Widgets_LIBRARIES} ${Qt5PrintSupport_LIBRARIES})
 
 
 install(TARGETS DisplayImage

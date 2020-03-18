@@ -7,7 +7,7 @@
 #include "itkImage.h"
 #include "itkImageFileReader.h"
 #include "itkRescaleIntensityImageFilter.h"
-#include "QuickView.h"
+
 
 using ImageType = itk::Image<unsigned char, 2>;
 static void CreateImage(ImageType * const image);
@@ -34,10 +34,7 @@ int main(int argc, char *argv[]){
      rescaleFilter->SetOutputMaximum(255);
      rescaleFilter->Update();
 
-     QuickView viewer;
-     viewer.AddImage(image.GetPointer());
-     viewer.AddImage(rescaleFilter->GetOutput());
-     viewer.Visualize();
+
 
     QApplication app(argc, argv);
     QGuiApplication::setApplicationDisplayName(ImageViewer::tr("Image Viewer"));
