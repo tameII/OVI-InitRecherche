@@ -1,16 +1,12 @@
 #include <QApplication>
-#include <QCommandLineParser>
+#include "mainview.h"
 
-#include "imageviewer.h"
-#include "treeviewer.h"
-
+#include"imageviewer.h"
 #include "itkImage.h"
 #include "itkImageFileReader.h"
 #include "itkRescaleIntensityImageFilter.h"
 
 
-using ImageType = itk::Image<unsigned char, 2>;
-static void CreateImage(ImageType * const image);
 
 int main(int argc, char *argv[]){
 
@@ -34,55 +30,13 @@ int main(int argc, char *argv[]){
      rescaleFilter->SetOutputMaximum(255);
      rescaleFilter->Update();
 
-
-
     QApplication app(argc, argv);
     QGuiApplication::setApplicationDisplayName(ImageViewer::tr("Image Viewer"));
-    QCommandLineParser commandLineParser;
-    commandLineParser.addHelpOption();
-    commandLineParser.addPositionalArgument(ImageViewer::tr("[file]"), ImageViewer::tr("Image file to open."));
-    commandLineParser.process(QCoreApplication::arguments());
-    ImageViewer imageViewer;
-    if (!commandLineParser.positionalArguments().isEmpty()
-        && !imageViewer.loadFile(commandLineParser.positionalArguments().front())) {
-        return -1;
-    }
 
-
-    TreeViewer treeViewer;
-    treeViewer.setWindowTitle("TreeViewer");
-    treeViewer.show();
-    imageViewer.show();
+    MainView mainView;
+    mainView.setWindowTitle("ImageViewer");
+    mainView.show();
 
     return app.exec();
 }
 
-void CreateImage(ImageType * const image){
-  // Create an image with 2 connected components
-  ImageType::IndexType corner = { { 0, 0 } };
-
-  ImageType::SizeType size;
-  unsigned int        NumRows = 200;
-  unsigned int        NumCols = 300;
-  size[0] = NumRows;
-  size[1] = NumCols;
-
-  ImageType::RegionType region(corner, size);
-
-  image->SetRegions(region);
-  image->Allocate();
-
-  // Make a square
-  for (unsigned int r = 40; r < 100; r++)
-  {
-    for (unsigned int c = 40; c < 100; c++)
-    {
-      ImageType::IndexType pixelIndex;
-      pixelIndex[0] = r;
-      pixelIndex[1] = c;
-
-      image->SetPixel(pixelIndex, 15);
-    }
-  }
-
-}
