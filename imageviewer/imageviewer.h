@@ -3,6 +3,12 @@
 
 #include <QMainWindow>
 #include <QImage>
+#include <QSlider>
+#include <QGroupBox>
+#include <QGridLayout>
+#include <stdio.h>
+#include <dirent.h>
+
 #ifndef QT_NO_PRINTER
 #include <QPrinter>
 #endif
@@ -42,15 +48,19 @@ private:
     void createMenus();
     void updateActions();
     bool saveFile(const QString &fileName);
-    void setImage(const QImage &newImage);
+    void setImage(int num);
     void scaleImage(double factor);
     void adjustScrollBar(QScrollBar *scrollBar, double factor);
-
+    QString** listAllFiles(char * filename);
     QImage image;
     QLabel *imageLabel;
     QScrollArea *scrollArea;
+    QGridLayout *box;
+    QSlider *slider;
+    QLabel* fileName;
+    QString ** files ;
     double scaleFactor = 1;
-
+    int nbFiles;
 #ifndef QT_NO_PRINTER
     QPrinter printer;
 #endif
