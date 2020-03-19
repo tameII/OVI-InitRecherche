@@ -3,7 +3,6 @@
 #include <QMenuBar>
 
 #include "mainview.h"
-
 #include "imageviewer.h"
 #include "treeviewer.h"
 

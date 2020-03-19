@@ -28,9 +28,11 @@
 #endif
 #endif
 
-ImageViewer::ImageViewer(QWidget *parent) : QMainWindow(parent), imageLabel(new QLabel), scrollArea(new QScrollArea)
-{
+ImageViewer::ImageViewer(QWidget *parent) : QMainWindow(parent), imageLabel(new QLabel), scrollArea(new QScrollArea){
 
+    QPalette pal = palette();
+
+    //Definition of image (little white square)
     imageLabel->setBackgroundRole(QPalette::Base);
     imageLabel->setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Ignored);
     imageLabel->setScaledContents(true);
@@ -40,44 +42,30 @@ ImageViewer::ImageViewer(QWidget *parent) : QMainWindow(parent), imageLabel(new 
     imageLabel->show();
 
     nbFiles = 0;
-    files = listAllFiles("../resources");
+
+    //If ressoucre not exist or empty => crash
+//    files = listAllFiles("../resources");
   
     scrollArea->setBackgroundRole(QPalette::Dark);
-  
-    //scrollArea->setWidget(imageLabel);
+    scrollArea->setWidget(imageLabel);
     scrollArea->setVisible(true);
     setCentralWidget(scrollArea);
-    resize(QGuiApplication::primaryScreen()->availableSize() * 3 / 5);
 
-    printf("TAILLE FENETRE %d\n", scrollArea->size().width());
-    qInfo() << "TAILLE FENETRE"<<scrollArea->size().width();
-
-    scrollArea->resize(10000,10000);
+//    scrollArea->resize(10000,10000);
 
     box = new QGridLayout;
-
-    //QVBoxLayout* layout = new QVBoxLayout;
     slider = new QSlider(Qt::Horizontal, scrollArea);
     fileName = new QLabel(scrollArea);
-    fileName->setText(*files[0]);
+    fileName->setText(/**files[0]*/"NLOP");
     box->addWidget(fileName,0,0);
     box->addWidget(slider,1,0);
     scrollArea->setLayout(box);
-    //layout->addWidget(fileName);
-    //layout->addWidget(slider);
-    //box->setLayout(layout);
-    //setCentralWidget(box);
-
-    //slider->setParent(box);
-
-    //scrollArea->setWidget(slider);
-
-    slider->setRange(0, nbFiles-1);
+    slider->setRange(0, /*nbFiles-1*/10);
     connect(slider, &QSlider::valueChanged, this, &ImageViewer::setImage);
+
 }
 
-bool ImageViewer::loadFile(const QString &fileName)
-{
+bool ImageViewer::loadFile(const QString &fileName){
     QImageReader reader(fileName);
     reader.setAutoTransform(true);
     const QImage newImage = reader.read();
@@ -98,8 +86,7 @@ bool ImageViewer::loadFile(const QString &fileName)
     return true;
 }
 
-void ImageViewer::setImage(int num)
-{
+void ImageViewer::setImage(int num){
     /*image = newImage;
     if (image.colorSpace().isValid())
         image.convertToColorSpace(QColorSpace::SRgb);
@@ -117,8 +104,7 @@ void ImageViewer::setImage(int num)
     fileName->setText(*files[num]);
 }
 
-bool ImageViewer::saveFile(const QString &fileName)
-{
+bool ImageViewer::saveFile(const QString &fileName){
     QImageWriter writer(fileName);
 
     if (!writer.write(image)) {
@@ -132,8 +118,7 @@ bool ImageViewer::saveFile(const QString &fileName)
     return true;
 }
 
-static void initializeImageFileDialog(QFileDialog &dialog, QFileDialog::AcceptMode acceptMode)
-{
+static void initializeImageFileDialog(QFileDialog &dialog, QFileDialog::AcceptMode acceptMode){
     static bool firstDialog = true;
 
     if (firstDialog) {
@@ -154,24 +139,21 @@ static void initializeImageFileDialog(QFileDialog &dialog, QFileDialog::AcceptMo
         dialog.setDefaultSuffix("jpg");
 }
 
-void ImageViewer::open()
-{
+void ImageViewer::open(){
     QFileDialog dialog(this, tr("Open File"));
     initializeImageFileDialog(dialog, QFileDialog::AcceptOpen);
 
     while (dialog.exec() == QDialog::Accepted && !loadFile(dialog.selectedFiles().first())) {}
 }
 
-void ImageViewer::saveAs()
-{
+void ImageViewer::saveAs(){
     QFileDialog dialog(this, tr("Save File As"));
     initializeImageFileDialog(dialog, QFileDialog::AcceptSave);
 
     while (dialog.exec() == QDialog::Accepted && !saveFile(dialog.selectedFiles().first())) {}
 }
 
-void ImageViewer::print()
-{
+void ImageViewer::print(){
     Q_ASSERT(imageLabel->pixmap());
 #if QT_CONFIG(printdialog)
     QPrintDialog dialog(&printer, this);
@@ -187,16 +169,14 @@ void ImageViewer::print()
 #endif
 }
 
-void ImageViewer::copy()
-{
+void ImageViewer::copy(){
 #ifndef QT_NO_CLIPBOARD
     QGuiApplication::clipboard()->setImage(image);
 #endif // !QT_NO_CLIPBOARD
 }
 
 #ifndef QT_NO_CLIPBOARD
-static QImage clipboardImage()
-{
+static QImage clipboardImage(){
     if (const QMimeData *mimeData = QGuiApplication::clipboard()->mimeData()) {
         if (mimeData->hasImage()) {
             const QImage image = qvariant_cast<QImage>(mimeData->imageData());
@@ -208,8 +188,7 @@ static QImage clipboardImage()
 }
 #endif // !QT_NO_CLIPBOARD
 
-void ImageViewer::paste()
-{
+void ImageViewer::paste(){
 #ifndef QT_NO_CLIPBOARD
     const QImage newImage = clipboardImage();
     if (newImage.isNull()) {
@@ -225,24 +204,20 @@ void ImageViewer::paste()
 }
 
 //! [9]
-void ImageViewer::zoomIn()
-{
+void ImageViewer::zoomIn(){
     scaleImage(1.25);
 }
 
-void ImageViewer::zoomOut()
-{
+void ImageViewer::zoomOut(){
     scaleImage(0.8);
 }
 
-void ImageViewer::normalSize()
-{
+void ImageViewer::normalSize(){
     imageLabel->adjustSize();
     scaleFactor = 1.0;
 }
 
-void ImageViewer::fitToWindow()
-{
+void ImageViewer::fitToWindow(){
     bool fitToWindow = fitToWindowAct->isChecked();
     scrollArea->setWidgetResizable(fitToWindow);
     if (!fitToWindow)
@@ -250,8 +225,7 @@ void ImageViewer::fitToWindow()
     updateActions();
 }
 
-void ImageViewer::about()
-{
+void ImageViewer::about(){
     QMessageBox::about(this, tr("About Image Viewer"),
             tr("<p>The <b>Image Viewer</b> example shows how to combine QLabel "
                "and QScrollArea to display an image. QLabel is typically used "
@@ -267,8 +241,7 @@ void ImageViewer::about()
                "shows how to use QPainter to print an image.</p>"));
 }
 
- void ImageViewer::createActions()
-{
+ void ImageViewer::createActions(){
     QMenu *fileMenu = menuBar()->addMenu(tr("&File"));
 
     QAction *openAct = fileMenu->addAction(tr("&Open..."), this, &ImageViewer::open);
@@ -322,8 +295,7 @@ void ImageViewer::about()
     helpMenu->addAction(tr("About &Qt"), &QApplication::aboutQt);
 }
 
-void ImageViewer::updateActions()
-{
+void ImageViewer::updateActions(){
     saveAsAct->setEnabled(!image.isNull());
     copyAct->setEnabled(!image.isNull());
     zoomInAct->setEnabled(!fitToWindowAct->isChecked());
@@ -331,8 +303,7 @@ void ImageViewer::updateActions()
     normalSizeAct->setEnabled(!fitToWindowAct->isChecked());
 }
 
-void ImageViewer::scaleImage(double factor)
-{
+void ImageViewer::scaleImage(double factor){
     Q_ASSERT(imageLabel->pixmap());
     scaleFactor *= factor;
     imageLabel->resize(scaleFactor * imageLabel->pixmap()->size());
@@ -344,35 +315,24 @@ void ImageViewer::scaleImage(double factor)
     zoomOutAct->setEnabled(scaleFactor > 0.333);
 }
 
-void ImageViewer::adjustScrollBar(QScrollBar *scrollBar, double factor)
-{
+void ImageViewer::adjustScrollBar(QScrollBar *scrollBar, double factor){
     scrollBar->setValue(int(factor * scrollBar->value()
                             + ((factor - 1) * scrollBar->pageStep()/2)));
 }
 
 QString** ImageViewer::listAllFiles(char * filename){
-
     DIR *d;
-
     struct dirent *dir;
-
     d = opendir(filename);
     QString ** q;
-    if (d)
-
-    {
-
-        while ((dir = readdir(d)) != NULL)
-
-        {
+    if (d){
+        while ((dir = readdir(d)) != NULL){
             std::string dname = dir->d_name;
             if(dname.compare(".") != 0 && dname.compare("..") != 0){
                 nbFiles++;
             }
         }
-
         closedir(d);
-
     }
     d = opendir(filename);
     q = new QString* [nbFiles];

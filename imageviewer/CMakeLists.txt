@@ -1,5 +1,9 @@
 cmake_minimum_required(VERSION 3.10.2)
 
+file(GLOB DisplayImage_SRC
+    "*.cpp"
+)
+
 project(DisplayImage)
 
 find_package(ITK REQUIRED)
@@ -37,7 +41,7 @@ add_executable(DisplayImage
     main.cpp
     treeviewer.cpp
     mainview.cpp
-)
+    )
 
 qt5_use_modules(DisplayImage Widgets)
 
