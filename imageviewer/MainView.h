@@ -2,8 +2,8 @@
 #define DIALOG_H
 
 #include <QDialog>
-#include "imageviewer.h"
-#include "treeviewer.h"
+#include "ImageViewer.h"
+#include "TreeViewer.h"
 
 QT_BEGIN_NAMESPACE
 class QAction;

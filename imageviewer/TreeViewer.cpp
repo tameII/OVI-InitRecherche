@@ -1,4 +1,4 @@
-#include "treeviewer.h"
+#include "TreeViewer.h"
 
 #include <QApplication>
 #include <QClipboard>

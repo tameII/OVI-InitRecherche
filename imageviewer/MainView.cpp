@@ -2,9 +2,9 @@
 #include <QtWidgets>
 #include <QMenuBar>
 
-#include "mainview.h"
-#include "imageviewer.h"
-#include "treeviewer.h"
+#include "MainView.h"
+#include "ImageViewer.h"
+#include "TreeViewer.h"
 
 
 MainView::MainView()
