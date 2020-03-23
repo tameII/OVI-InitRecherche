@@ -17,8 +17,7 @@
 #include <QScrollBar>
 #include <QStandardPaths>
 #include <QStatusBar>
-#include<QDebug>
-
+#include <QDebug>
 
 
 #if defined(QT_PRINTSUPPORT_LIB)
@@ -32,33 +31,38 @@ ImageViewer::ImageViewer(QWidget *parent) : QMainWindow(parent), imageLabel(new 
 
     QPalette pal = palette();
 
-    //Definition of image (little white square)
-    imageLabel->setBackgroundRole(QPalette::Base);
-    imageLabel->setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Ignored);
-    imageLabel->setScaledContents(true);
-
-    imageLabel->setAutoFillBackground(true);
-    imageLabel->setPalette(pal);
-    imageLabel->show();
-
     nbFiles = 0;
 
     //If ressoucre not exist or empty => crash
-//    files = listAllFiles("../resources");
-  
-    scrollArea->setBackgroundRole(QPalette::Dark);
-    scrollArea->setWidget(imageLabel);
+
+    border = new BorderWidgetQt();
+
+    scrollArea->setBackgroundRole(QPalette::Base);
+
     scrollArea->setVisible(true);
     setCentralWidget(scrollArea);
-
-//    scrollArea->resize(10000,10000);
 
     box = new QGridLayout;
     slider = new QSlider(Qt::Horizontal, scrollArea);
     fileName = new QLabel(scrollArea);
-    fileName->setText(/**files[0]*/"NLOP");
-    box->addWidget(fileName,0,0);
-    box->addWidget(slider,1,0);
+    fileName->setText(/**files[0]*/"BLOP");
+    fileName->setMargin(1);
+    box->addWidget(border,0,0);
+    box->setRowStretch(0,85);
+
+    box->addWidget(fileName,1,0,Qt::AlignCenter);
+
+    box->setRowStretch(1,5);
+
+    box->addWidget(slider,2,0);
+    box->setRowStretch(2,10);
+
+    box->setSpacing(0);
+
+    box->setMargin(0);
+    box->setContentsMargins(0,0,0,0);
+
+
     scrollArea->setLayout(box);
     slider->setRange(0, /*nbFiles-1*/10);
     connect(slider, &QSlider::valueChanged, this, &ImageViewer::setImage);

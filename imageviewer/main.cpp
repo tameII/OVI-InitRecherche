@@ -1,7 +1,8 @@
 #include <QApplication>
 #include "mainview.h"
-
 #include"imageviewer.h"
+#include "BorderWidgetQt.h"
+
 #include "itkImage.h"
 #include "itkImageFileReader.h"
 #include "itkRescaleIntensityImageFilter.h"

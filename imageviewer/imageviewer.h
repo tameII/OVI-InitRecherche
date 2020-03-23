@@ -9,6 +9,8 @@
 #include <stdio.h>
 #include <dirent.h>
 
+#include "BorderWidgetQt.h"
+
 #ifndef QT_NO_PRINTER
 #include <QPrinter>
 #endif
@@ -58,6 +60,7 @@ private:
     QGridLayout *box;
     QSlider *slider;
     QLabel* fileName;
+    BorderWidgetQt *border;
     QString ** files ;
     double scaleFactor = 1;
     int nbFiles;

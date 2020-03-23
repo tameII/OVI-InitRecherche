@@ -17,10 +17,12 @@ set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 set(CMAKE_AUTOUIC ON)
 
+include_directories(${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_BINARY_DIR})
+
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
 # Widgets finds its own dependencies (QtGui and QtCore).
-find_package(Qt5Widgets REQUIRED)
+find_package(Qt5Widgets REQUIRED QUIET)
 find_package(Qt5PrintSupport REQUIRED)
 
 
@@ -35,25 +37,18 @@ add_definitions(${Qt5Widgets_DEFINITIONS})
 # without -fPIE. We add that here.
 set(CMAKE_CXX_FLAGS "${Qt5Widgets_EXECUTABLE_COMPILE_FLAGS}")
 
+file(GLOB CXX_FILES *.cpp)
+file(GLOB UI_FILES *.ui)
+file(GLOB QT_WRAP *.h)
 
-add_executable(DisplayImage
-    imageviewer.cpp
-    main.cpp
-    treeviewer.cpp
-    mainview.cpp
-    )
+qt5_wrap_ui(UISrcs ${UI_FILES} )
 
-qt5_use_modules(DisplayImage Widgets)
+# CMAKE_AUTOMOC in ON so the MOC headers will be automatically wrapped.
+add_executable(DisplayImage ${CXX_FILES} ${UI_FILES} ${QT_WRAP} )
+
+
+qt5_use_modules(DisplayImage Core Gui Widgets)
 
 target_link_libraries(DisplayImage ${ITK_LIBRARIES} ${VTK_LIBRARIES} ${Qt5Widgets_LIBRARIES} ${Qt5PrintSupport_LIBRARIES})
 
-
-install(TARGETS DisplayImage
-  DESTINATION bin/
-  COMPONENT Runtime
-  )
-
-enable_testing()
-add_test(NAME DisplayImageTest
-  COMMAND ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/DisplayImage)
 
