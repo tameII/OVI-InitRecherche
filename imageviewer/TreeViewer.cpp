@@ -2,7 +2,7 @@
 
 #include <QApplication>
 #include <QClipboard>
-#include <QColorSpace>
+//#include <QColorSpace>
 #include <QDir>
 #include <QFileDialog>
 #include <QImageReader>
@@ -23,6 +23,8 @@
 #if QT_CONFIG(printdialog)
 #include <QPrintDialog>
 #endif
+
+
 #endif
 //! [0]
 TreeViewer::TreeViewer(QWidget *parent)
@@ -37,6 +39,9 @@ TreeViewer::TreeViewer(QWidget *parent)
     scrollArea->setWidget(imageLabel);
     scrollArea->setVisible(false);
     setCentralWidget(scrollArea);
+
+    //Initialize the tree
+    QVTree *qvtree = new QVTree(this);
 
     //createActions();
 

@@ -7,6 +7,8 @@
 #include <QPrinter>
 #endif
 
+#include "qvtree.h"
+
 QT_BEGIN_NAMESPACE
 class QAction;
 class QLabel;

@@ -2,7 +2,7 @@
 
 #include <QApplication>
 #include <QClipboard>
-#include <QColorSpace>
+//#include <QColorSpace>
 #include <QDir>
 #include <QFileDialog>
 #include <QImageReader>
