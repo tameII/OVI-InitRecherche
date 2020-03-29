@@ -7,7 +7,7 @@
 #include <QPrinter>
 #endif
 
-#include "qvtree.h"
+#include "../QVTree.h"
 
 QT_BEGIN_NAMESPACE
 class QAction;

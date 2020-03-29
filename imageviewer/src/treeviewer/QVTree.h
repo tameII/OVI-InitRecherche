@@ -3,7 +3,7 @@
 
 #include <QWidget>
 #include <iostream>
-#include "tree.h"
+#include "Tree.h"
 
 
 class QVTree : public QWidget

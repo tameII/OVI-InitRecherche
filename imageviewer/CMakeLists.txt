@@ -1,9 +1,5 @@
 cmake_minimum_required(VERSION 3.10.2)
 
-file(GLOB DisplayImage_SRC
-    "*.cpp"
-)
-
 project(DisplayImage)
 
 find_package(ITK REQUIRED)
@@ -12,6 +8,8 @@ find_package(VTK REQUIRED)
 
 include(${ITK_USE_FILE})
 include(${VTK_USE_FILE})
+
+include_directories(src/*)
 
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
@@ -37,9 +35,13 @@ add_definitions(${Qt5Widgets_DEFINITIONS})
 # without -fPIE. We add that here.
 set(CMAKE_CXX_FLAGS "${Qt5Widgets_EXECUTABLE_COMPILE_FLAGS}")
 
-file(GLOB CXX_FILES *.cpp)
-file(GLOB UI_FILES *.ui)
-file(GLOB QT_WRAP *.h)
+file(GLOB_RECURSE CXX_FILES *.cpp)
+file(GLOB_RECURSE UI_FILES *.ui)
+file(GLOB_RECURSE QT_WRAP *.h)
+file(GLOB_RECURSE DisplayImage_SRC
+    "*.cpp"
+)
+
 
 qt5_wrap_ui(UISrcs ${UI_FILES} )
 

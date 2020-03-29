@@ -1,4 +1,4 @@
-#include "qvtree.h"
+#include "QVTree.h"
 
 
 QVTree::QVTree(QWidget *parent) : QWidget(parent)

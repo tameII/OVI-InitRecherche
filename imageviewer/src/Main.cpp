@@ -1,7 +1,7 @@
 #include <QApplication>
-#include "MainView.h"
-#include"ImageViewer.h"
-#include "BorderWidgetQt.h"
+#include "mainview/view/MainView.h"
+#include"imageviewer/view/ImageViewer.h"
+#include "imageviewer/vtkwidget/BorderWidgetQt.h"
 
 #include "itkImage.h"
 #include "itkImageFileReader.h"

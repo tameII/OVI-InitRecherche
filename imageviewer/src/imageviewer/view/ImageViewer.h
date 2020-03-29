@@ -9,7 +9,7 @@
 #include <stdio.h>
 #include <dirent.h>
 
-#include "BorderWidgetQt.h"
+#include "../vtkwidget/BorderWidgetQt.h"
 
 #ifndef QT_NO_PRINTER
 #include <QPrinter>
@@ -32,9 +32,10 @@ public:
     ImageViewer(QWidget *parent = nullptr);
     bool loadFile(const QString &);
     void createActions();
+    void setImage(int num);
 
 
-private slots:
+public slots:
     void open();
     void saveAs();
     void print();
@@ -43,14 +44,12 @@ private slots:
     void zoomIn();
     void zoomOut();
     void normalSize();
-    void fitToWindow();
     void about();
 
 private:
     void createMenus();
     void updateActions();
     bool saveFile(const QString &fileName);
-    void setImage(int num);
     void scaleImage(double factor);
     void adjustScrollBar(QScrollBar *scrollBar, double factor);
     QString** listAllFiles(char * filename);
@@ -62,19 +61,13 @@ private:
     QLabel* fileName;
     BorderWidgetQt *border;
     QString ** files ;
+    QStringList dcmFiles;
     double scaleFactor = 1;
     int nbFiles;
 #ifndef QT_NO_PRINTER
     QPrinter printer;
 #endif
 
-    QAction *saveAsAct;
-    QAction *printAct;
-    QAction *copyAct;
-    QAction *zoomInAct;
-    QAction *zoomOutAct;
-    QAction *normalSizeAct;
-    QAction *fitToWindowAct;
 };
 
 #endif
