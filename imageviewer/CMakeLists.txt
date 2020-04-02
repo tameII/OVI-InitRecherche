@@ -9,8 +9,6 @@ find_package(VTK REQUIRED)
 include(${ITK_USE_FILE})
 include(${VTK_USE_FILE})
 
-#include_directories(src)
-
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 set(CMAKE_AUTOUIC ON)
@@ -34,14 +32,42 @@ add_definitions(${Qt5Widgets_DEFINITIONS})
 # without -fPIE. We add that here.
 set(CMAKE_CXX_FLAGS "${Qt5Widgets_EXECUTABLE_COMPILE_FLAGS}")
 
-file(GLOB_RECURSE CXX_FILES *.cpp)
-file(GLOB_RECURSE UI_FILES *.ui)
-file(GLOB_RECURSE QT_WRAP *.h)
+include_directories(src/imageviewer)
+include_directories(src/imageviewer/view)
+include_directories(src/imageviewer/vtkwidget)
+include_directories(src/mainview)
+include_directories(src/mainview/view)
+include_directories(src/treeviewer)
+include_directories(src/treeviewer/view)
+
+set(COMPILE_LIST
+        src/imageviewer/vtkwidget/BorderWidgetQt.cpp
+        src/imageviewer/vtkwidget/BorderWidgetQt.h
+        src/imageviewer/view/ImageViewer.cpp
+        src/imageviewer/view/ImageViewer.h
+        src/mainview/view/MainView.cpp
+        src/mainview/view/MainView.h
+        src/treeviewer/QVTree.cpp
+        src/treeviewer/QVTree.h
+        src/treeviewer/Tree.cpp
+        src/treeviewer/Tree.h
+        src/treeviewer/view/TreeViewer.cpp
+        src/treeviewer/view/TreeViewer.h
+)
+
+set(UI_LIST
+        src/imageviewer/vtkwidget/BorderWidgetQt.ui
+)
+
+set(EXEC_LIST
+        ${COMPILE_LIST}
+        src/Main.cpp)
+
 
 qt5_wrap_ui(UISrcs ${UI_FILES} )
 
 # CMAKE_AUTOMOC in ON so the MOC headers will be automatically wrapped.
-add_executable(DisplayImage ${CXX_FILES} ${UI_FILES})
+add_executable(DisplayImage ${EXEC_LIST})
 
 
 qt5_use_modules(DisplayImage Core Gui Widgets)
