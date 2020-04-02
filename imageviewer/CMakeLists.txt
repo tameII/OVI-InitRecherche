@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.10.2)
+cmake_minimum_required(VERSION 3.9)
 
 project(DisplayImage)
 
@@ -41,7 +41,7 @@ file(GLOB_RECURSE QT_WRAP *.h)
 qt5_wrap_ui(UISrcs ${UI_FILES} )
 
 # CMAKE_AUTOMOC in ON so the MOC headers will be automatically wrapped.
-add_executable(DisplayImage ${CXX_FILES} ${UI_FILES} ${QT_WRAP} )
+add_executable(DisplayImage ${CXX_FILES} ${UI_FILES})
 
 
 qt5_use_modules(DisplayImage Core Gui Widgets)

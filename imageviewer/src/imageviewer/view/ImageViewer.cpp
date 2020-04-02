@@ -19,14 +19,6 @@
 #include <QStatusBar>
 #include <QDebug>
 
-
-#if defined(QT_PRINTSUPPORT_LIB)
-#include <QtPrintSupport/qtprintsupportglobal.h>
-#if QT_CONFIG(printdialog)
-#include <QPrintDialog>
-#endif
-#endif
-
 ImageViewer::ImageViewer(QWidget *parent) : QMainWindow(parent), imageLabel(new QLabel), scrollArea(new QScrollArea){
 
     QPalette pal = palette();
