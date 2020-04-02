@@ -70,7 +70,7 @@ bool ImageViewer::loadFile(const QString &folderPath){
     std::cout << "main function %d" << nbFiles  << std::endl;
     if (nbFiles <= 0) {
         QMessageBox::information(this, QGuiApplication::applicationDisplayName(),
-                                 tr("Aucune image dicom détecté dans ce dossier."));
+                                 tr("Aucune image dicom détectée dans ce dossier."));
         return false;
     }
 
