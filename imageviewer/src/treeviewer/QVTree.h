@@ -5,7 +5,6 @@
 #include <iostream>
 #include "Tree.h"
 
-
 class QVTree : public QWidget
 {
     Q_OBJECT

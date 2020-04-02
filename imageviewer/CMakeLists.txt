@@ -9,7 +9,7 @@ find_package(VTK REQUIRED)
 include(${ITK_USE_FILE})
 include(${VTK_USE_FILE})
 
-include_directories(src)
+#include_directories(src)
 
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
@@ -37,8 +37,6 @@ set(CMAKE_CXX_FLAGS "${Qt5Widgets_EXECUTABLE_COMPILE_FLAGS}")
 file(GLOB_RECURSE CXX_FILES *.cpp)
 file(GLOB_RECURSE UI_FILES *.ui)
 file(GLOB_RECURSE QT_WRAP *.h)
-
-
 
 qt5_wrap_ui(UISrcs ${UI_FILES} )
 

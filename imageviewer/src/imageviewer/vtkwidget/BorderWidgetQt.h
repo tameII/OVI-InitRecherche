@@ -32,7 +32,7 @@ private slots:
 //    void on_sliderSlices_sliderMoved(int posicion);
 
 private:
-    Ui::BorderWidgetQt *ui;
+//    Ui::BorderWidgetQt *ui;
     vtkSmartPointer<vtkDICOMImageReader> reader;
     vtkSmartPointer<vtkImageViewer2> viewer;
     int minSlice;

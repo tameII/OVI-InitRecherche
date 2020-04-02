@@ -2,7 +2,6 @@
 
 #include <QApplication>
 #include <QClipboard>
-//#include <QColorSpace>
 #include <QDir>
 #include <QFileDialog>
 #include <QImageReader>
@@ -18,15 +17,6 @@
 #include <QStandardPaths>
 #include <QStatusBar>
 
-#if defined(QT_PRINTSUPPORT_LIB)
-#include <QtPrintSupport/qtprintsupportglobal.h>
-#if QT_CONFIG(printdialog)
-#include <QPrintDialog>
-#endif
-
-
-#endif
-//! [0]
 TreeViewer::TreeViewer(QWidget *parent)
    : QMainWindow(parent), imageLabel(new QLabel)
    , scrollArea(new QScrollArea)
