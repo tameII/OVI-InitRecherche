@@ -11,10 +11,6 @@
 
 #include "../vtkwidget/BorderWidgetQt.h"
 
-#ifndef QT_NO_PRINTER
-#include <QPrinter>
-#endif
-
 QT_BEGIN_NAMESPACE
 class QAction;
 class QLabel;
@@ -38,7 +34,6 @@ public:
 public slots:
     void open();
     void saveAs();
-    void print();
     void copy();
     void paste();
     void zoomIn();
@@ -64,9 +59,7 @@ private:
     QStringList dcmFiles;
     double scaleFactor = 1;
     int nbFiles;
-#ifndef QT_NO_PRINTER
-    QPrinter printer;
-#endif
+
 
 };
 

@@ -28,7 +28,6 @@ public:
 
 private slots:
     void open();
-    void print();
     void paste();
     void zoomIn();
     void zoomOut();

@@ -9,7 +9,7 @@ find_package(VTK REQUIRED)
 include(${ITK_USE_FILE})
 include(${VTK_USE_FILE})
 
-include_directories(src/*)
+include_directories(src)
 
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
@@ -20,8 +20,7 @@ include_directories(${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_BINARY_DIR})
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
 # Widgets finds its own dependencies (QtGui and QtCore).
-find_package(Qt5Widgets REQUIRED QUIET)
-find_package(Qt5PrintSupport REQUIRED)
+find_package(Qt5Widgets REQUIRED)
 
 
 # The Qt5Widgets_INCLUDES also includes the include directories for
@@ -38,9 +37,7 @@ set(CMAKE_CXX_FLAGS "${Qt5Widgets_EXECUTABLE_COMPILE_FLAGS}")
 file(GLOB_RECURSE CXX_FILES *.cpp)
 file(GLOB_RECURSE UI_FILES *.ui)
 file(GLOB_RECURSE QT_WRAP *.h)
-file(GLOB_RECURSE DisplayImage_SRC
-    "*.cpp"
-)
+
 
 
 qt5_wrap_ui(UISrcs ${UI_FILES} )
@@ -51,6 +48,6 @@ add_executable(DisplayImage ${CXX_FILES} ${UI_FILES} ${QT_WRAP} )
 
 qt5_use_modules(DisplayImage Core Gui Widgets)
 
-target_link_libraries(DisplayImage ${ITK_LIBRARIES} ${VTK_LIBRARIES} ${Qt5Widgets_LIBRARIES} ${Qt5PrintSupport_LIBRARIES})
+target_link_libraries(DisplayImage ${ITK_LIBRARIES} ${VTK_LIBRARIES} ${Qt5Widgets_LIBRARIES})
 
 

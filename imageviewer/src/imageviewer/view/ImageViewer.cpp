@@ -131,21 +131,6 @@ void ImageViewer::saveAs(){
     while (dialog.exec() == QDialog::Accepted && !saveFile(dialog.selectedFiles().first())) {}
 }
 
-void ImageViewer::print(){
-    Q_ASSERT(imageLabel->pixmap());
-#if QT_CONFIG(printdialog)
-    QPrintDialog dialog(&printer, this);
-    if (dialog.exec()) {
-        QPainter painter(&printer);
-        QRect rect = painter.viewport();
-        QSize size = imageLabel->pixmap()->size();
-        size.scale(rect.size(), Qt::KeepAspectRatio);
-        painter.setViewport(rect.x(), rect.y(), size.width(), size.height());
-        painter.setWindow(imageLabel->pixmap()->rect());
-        painter.drawPixmap(0, 0, *imageLabel->pixmap());
-    }
-#endif
-}
 
 void ImageViewer::copy(){
 #ifndef QT_NO_CLIPBOARD

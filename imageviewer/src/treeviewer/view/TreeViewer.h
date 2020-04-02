@@ -3,9 +3,6 @@
 
 #include <QMainWindow>
 #include <QImage>
-#ifndef QT_NO_PRINTER
-#include <QPrinter>
-#endif
 
 #include "../QVTree.h"
 
@@ -37,10 +34,6 @@ private:
     QLabel *imageLabel;
     QScrollArea *scrollArea;
     double scaleFactor = 1;
-
-#ifndef QT_NO_PRINTER
-    QPrinter printer;
-#endif
 
     QAction *saveAsAct;
     QAction *printAct;

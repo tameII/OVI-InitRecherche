@@ -63,10 +63,6 @@ void MainView::createActions()
     QAction *openAct = fileMenu->addAction(tr("&Open..."), this, &MainView::open);
     openAct->setShortcut(QKeySequence::Open);
 
-    printAct = fileMenu->addAction(tr("&Print..."), this, &MainView::print);
-    printAct->setShortcut(QKeySequence::Print);
-    printAct->setEnabled(false);
-
     fileMenu->addSeparator();
 
     QAction *exitAct = fileMenu->addAction(tr("E&xit"), this, &QWidget::close);
@@ -124,9 +120,6 @@ static void initializeImageFileDialog(QFileDialog &dialog, QFileDialog::AcceptMo
         dialog.setDefaultSuffix("jpg");
 }
 
-void MainView::print(){
-    imageViewer->print();
-}
 
 void MainView::setImage(int num){
     imageViewer->setImage(num);
