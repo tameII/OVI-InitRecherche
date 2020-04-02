@@ -45,8 +45,6 @@ public:
 
   virtual void Execute(vtkObject* vtkNotUsed(caller), unsigned long, void*)
   {
-    //      vtkBorderWidget *borderWidget =
-    //          reinterpret_cast<vtkBorderWidget*>(caller);
   }
 };
 
@@ -87,36 +85,24 @@ bool BorderWidgetQt::openDicomImage(QString folderPath){
 }
 
 void BorderWidgetQt::drawDICOMSeries(std::string folderDICOM) {
-    // Asigna carpeta de donde obtener las imágenes DICOM
     reader->SetDirectoryName(folderDICOM.c_str());
     reader->Update();
 
-    // Enlaza el input del viewer al output del reader
     viewer->SetInputConnection(reader->GetOutputPort());
 
-    // Enlaza el widget con el viewer
+    // lier le widget au rendu
     this->viewer->SetRenderWindow(this->qvtkWidget->GetRenderWindow());
 
-//    this->qvtkWidget->set
-    // Añade interactor al viewer
+    // Setup listener
     viewer->SetupInteractor(this->qvtkWidget->GetInteractor());
 
-    // Inicializa
+    // Initialisation
     viewer->Render();
 
-    // Obtiene el número de slices
+    // Avoir numéro du slide
     minSlice = viewer->GetSliceMin();
     maxSlice = viewer->GetSliceMax();
 
-    this->BorderWidget->SetInteractor(this->qvtkWidget->GetInteractor());
-    this->setCentralWidget(this->qvtkWidget);
-    this->BorderWidget->On();
-
-    // Actualiza labels de la GUI
-//    ui->sliderSlices->setMinimum(minSlice);
-//    ui->sliderSlices->setMaximum(maxSlice);
-//    ui->labelSlicesNumber->setText(QString::number(maxSlice - minSlice));
-//    ui->labelFolderName->setText(QString::fromStdString(folderDICOM));
 }
 
 

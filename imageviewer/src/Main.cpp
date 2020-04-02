@@ -11,7 +11,6 @@ using ImageType = itk::Image<unsigned char, 2>;
 static void CreateImage(ImageType * const image);
 
 int main(int argc, char *argv[]){
-
     QApplication app(argc, argv);
     QGuiApplication::setApplicationDisplayName(ImageViewer::tr("Image Viewer"));
 
