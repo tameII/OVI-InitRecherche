@@ -6,11 +6,15 @@
 #include "itkImage.h"
 #include "itkImageFileReader.h"
 #include "itkRescaleIntensityImageFilter.h"
+#include <QVTKOpenGLWidget.h>
+
 
 using ImageType = itk::Image<unsigned char, 2>;
 static void CreateImage(ImageType * const image);
 
 int main(int argc, char *argv[]){
+//    QSurfaceFormat::setDefaultFormat(QVTKOpenGLWidget::defaultFormat());
+
     QApplication app(argc, argv);
     QGuiApplication::setApplicationDisplayName(ImageViewer::tr("Image Viewer"));
 

@@ -9,6 +9,8 @@
 #include <vtkRenderWindow.h>
 #include <vtkRenderWindowInteractor.h>
 #include <vtkRenderer.h>
+#include <vtkPoints.h>
+#include <vtkCellArray.h>
 
 class vtkBorderWidget;
 
@@ -25,10 +27,11 @@ public:
   bool openDicomImage(QString folderPath);
   void openDICOMFolder();
   void sliceSlider(int position);
-
+  void addPointToPointList();
 
 private slots:
     void drawDICOMSeries(std::string folderDICOM);
+
 //    void on_sliderSlices_sliderMoved(int posicion);
 
 private:
@@ -38,6 +41,8 @@ private:
     int minSlice;
     int maxSlice;
     vtkSmartPointer<vtkBorderWidget> BorderWidget;
+    vtkSmartPointer<vtkPoints> points;
+    vtkSmartPointer<vtkCellArray> lineIndices;
 };
 
 #endif

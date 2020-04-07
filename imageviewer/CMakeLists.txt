@@ -35,12 +35,15 @@ set(CMAKE_CXX_FLAGS "${Qt5Widgets_EXECUTABLE_COMPILE_FLAGS}")
 include_directories(src/imageviewer)
 include_directories(src/imageviewer/view)
 include_directories(src/imageviewer/vtkwidget)
+include_directories(src/imageviewer/listener)
 include_directories(src/mainview)
 include_directories(src/mainview/view)
 include_directories(src/treeviewer)
 include_directories(src/treeviewer/view)
 
+
 set(COMPILE_LIST
+        src/imageviewer/listener/AddPointListener.h
         src/imageviewer/vtkwidget/BorderWidgetQt.cpp
         src/imageviewer/vtkwidget/BorderWidgetQt.h
         src/imageviewer/view/ImageViewer.cpp

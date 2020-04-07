@@ -59,7 +59,6 @@ bool ImageViewer::loadFile(const QString &folderPath){
     QDir directory(folderPath);
     dcmFiles = directory.entryList(QStringList() << "*.dcm" << "*.DCM",QDir::Files);
     nbFiles = dcmFiles.size();
-    std::cout << "main function %d" << nbFiles  << std::endl;
     if (nbFiles <= 0) {
         QMessageBox::information(this, QGuiApplication::applicationDisplayName(),
                                  tr("Aucune image dicom détectée dans ce dossier."));
