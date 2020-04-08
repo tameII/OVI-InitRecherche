@@ -77,7 +77,6 @@ bool ImageViewer::loadFile(const QString &folderPath){
 }
 
 void ImageViewer::setImage(int num){
-    std::cout << nbFiles;
     fileName->setText(dcmFiles.at(num));
     border->sliceSlider(num);
 }

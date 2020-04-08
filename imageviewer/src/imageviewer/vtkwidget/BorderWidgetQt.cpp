@@ -53,6 +53,9 @@ BorderWidgetQt::BorderWidgetQt()
   reader = vtkSmartPointer<vtkDICOMImageReader>::New();
   viewer = vtkSmartPointer<vtkImageViewer2>::New();
 
+  reader->SetDebug(true);
+  viewer->SetDebug(true);
+
   points = vtkSmartPointer<vtkPoints>::New();
 
 //  vtkNew<vtkNamedColors> colors;
@@ -80,6 +83,8 @@ BorderWidgetQt::BorderWidgetQt()
 
   this->setCentralWidget(this->qvtkWidget);
   this->qvtkWidget->GetRenderWindow()->Start();
+
+  this->qvtkWidget->GetRenderWindow()->SetDebug(true);
 
   this->BorderWidget->On();
 }
@@ -109,6 +114,8 @@ void BorderWidgetQt::drawDICOMSeries(std::string folderDICOM) {
     viewer->GetRenderer()->ResetCamera();
     viewer->Render();
 
+    std::cout << "Size : " << *viewer->GetSize() << std::endl;
+
     // Avoir numéro du slide
     minSlice = viewer->GetSliceMin();
     maxSlice = viewer->GetSliceMax();
@@ -131,6 +138,7 @@ void BorderWidgetQt::drawDICOMSeries(std::string folderDICOM) {
 
     viewer->GetRenderer()->AddActor(actor);
 
+
     style->SetDefaultRenderer(viewer->GetRenderer());
     style->SetCurrentRenderer(viewer->GetRenderer());
 
@@ -147,6 +155,8 @@ void BorderWidgetQt::drawDICOMSeries(std::string folderDICOM) {
 
 
 void BorderWidgetQt::sliceSlider(int position) {
+//    viewer->PrintSelf(std::cout,vtkIndent(2));
+    std::cout << "Size : " << *viewer->GetSize() << std::endl;
     viewer->SetSlice(position);
     viewer->Render();
 }
