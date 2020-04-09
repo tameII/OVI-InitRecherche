@@ -107,7 +107,7 @@ void BorderWidgetQt::drawDICOMSeries(std::string folderDICOM) {
     viewer->SetInputConnection(reader->GetOutputPort());
 
     // lier le widget au rendu
-    this->qvtkWidget->SetRenderWindow(this->viewer->GetRenderWindow());
+    this->viewer->SetRenderWindow(this->qvtkWidget->GetRenderWindow());
 
 //    viewer->setRenderer(this->qvtkWidget->GetRenderWindow()->GetRenderers()->GetFirstRenderer());
 
