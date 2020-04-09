@@ -15,11 +15,11 @@ QVTree::QVTree(QWidget *parent) : QWidget(parent)
     int level = 0;
     int floorSize = 80;
     int widthCorrection = 0;
-
-    node1->setGeometry(width/2 + widthCorrection,level+20,50,50);
+    int sizeNode = 30;
+    node1->setGeometry(width/2 + widthCorrection,level+20,sizeNode,sizeNode);
     level++;
-    node2->setGeometry(width/3 + widthCorrection,level*floorSize,50,50);
-    node3->setGeometry(width - width/3 + widthCorrection,level+floorSize,50,50);
+    node2->setGeometry(width/3 + widthCorrection,level*floorSize,sizeNode,sizeNode);
+    node3->setGeometry(width - width/3 + widthCorrection,level+floorSize,sizeNode,sizeNode);
 
     root = new Tree(node1, nullptr, new Tree(node2, new Tree(node3, nullptr, nullptr), nullptr));
 
