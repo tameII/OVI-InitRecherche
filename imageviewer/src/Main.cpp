@@ -15,6 +15,15 @@ static void CreateImage(ImageType * const image);
 int main(int argc, char *argv[]){
 //    QSurfaceFormat::setDefaultFormat(QVTKOpenGLWidget::defaultFormat());
 
+    QSurfaceFormat format;
+    format.setDepthBufferSize(24);
+    format.setStencilBufferSize(8);
+    format.setVersion(3, 3);
+    format.setProfile(QSurfaceFormat::CoreProfile);
+    QSurfaceFormat::setDefaultFormat(format);
+
+    std::cout << QSurfaceFormat::defaultFormat().majorVersion() << "." << QSurfaceFormat::defaultFormat().minorVersion() << std::endl;
+
     QApplication app(argc, argv);
     QGuiApplication::setApplicationDisplayName(ImageViewer::tr("Image Viewer"));
 
