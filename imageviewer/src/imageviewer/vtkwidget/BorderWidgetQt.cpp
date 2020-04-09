@@ -56,6 +56,7 @@ BorderWidgetQt::BorderWidgetQt()
   reader->SetDebug(true);
   viewer->SetDebug(true);
 
+
   points = vtkSmartPointer<vtkPoints>::New();
 
 //  vtkNew<vtkNamedColors> colors;
@@ -101,10 +102,14 @@ void BorderWidgetQt::drawDICOMSeries(std::string folderDICOM) {
 
     reader->Update();
 
+    viewer->GetImageActor()->SetDisplayExtent(0,429,0,429,0,0);
+
     viewer->SetInputConnection(reader->GetOutputPort());
 
     // lier le widget au rendu
-    this->viewer->SetRenderWindow(this->qvtkWidget->GetRenderWindow());
+    this->qvtkWidget->SetRenderWindow(this->viewer->GetRenderWindow());
+
+//    viewer->setRenderer(this->qvtkWidget->GetRenderWindow()->GetRenderers()->GetFirstRenderer());
 
     // Setup listener
 //    viewer->SetupInteractor(this->qvtkWidget->GetInteractor());
@@ -155,7 +160,7 @@ void BorderWidgetQt::drawDICOMSeries(std::string folderDICOM) {
 
 
 void BorderWidgetQt::sliceSlider(int position) {
-//    viewer->PrintSelf(std::cout,vtkIndent(2));
+    viewer->PrintSelf(std::cout,vtkIndent(2));
     std::cout << "Size : " << *viewer->GetSize() << std::endl;
     viewer->SetSlice(position);
     viewer->Render();
