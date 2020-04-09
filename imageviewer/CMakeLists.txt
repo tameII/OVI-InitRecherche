@@ -5,6 +5,8 @@ project(DisplayImage)
 find_package(ITK REQUIRED)
 find_package(VTK REQUIRED)
 
+message(${ITK_USE_FILE})
+message(${VTK_USE_FILE})
 
 include(${ITK_USE_FILE})
 include(${VTK_USE_FILE})
