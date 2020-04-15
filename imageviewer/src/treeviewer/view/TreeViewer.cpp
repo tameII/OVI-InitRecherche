@@ -25,12 +25,12 @@ TreeViewer::TreeViewer(QWidget *parent)
     imageLabel->setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Ignored);
     imageLabel->setScaledContents(true);
 
-    scrollArea->setBackgroundRole(QPalette::Dark);
-    scrollArea->setWidget(imageLabel);
-    scrollArea->setVisible(false);
-    setCentralWidget(scrollArea);
+//    scrollArea->setBackgroundRole(QPalette::Dark);
+//    scrollArea->setWidget(imageLabel);
+//    scrollArea->setVisible(false);
+//    setCentralWidget(scrollArea);
 
-    //Initialize the tree
+//    //Initialize the tree
     QVTree *qvtree = new QVTree(this);
 
     //createActions();
