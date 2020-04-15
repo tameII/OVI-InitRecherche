@@ -18,7 +18,7 @@
 #include <QStatusBar>
 
 TreeViewer::TreeViewer(QWidget *parent)
-   : QMainWindow(parent), imageLabel(new QLabel)
+   : QMainWindow(parent), imageLabel(new QLabel), root(this)
    , scrollArea(new QScrollArea)
 {
     imageLabel->setBackgroundRole(QPalette::Base);
@@ -31,7 +31,9 @@ TreeViewer::TreeViewer(QWidget *parent)
 //    setCentralWidget(scrollArea);
 
 //    //Initialize the tree
-    QVTree *qvtree = new QVTree(this);
+
+root.addChild(new Tree(this));
+root.addChild(new Tree(this));
 
     //createActions();
 

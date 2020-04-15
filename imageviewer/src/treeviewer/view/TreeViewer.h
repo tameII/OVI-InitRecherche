@@ -43,6 +43,8 @@ private:
     QAction *normalSizeAct;
     QAction *fitToWindowAct;
 
+    Tree root;
+
 };
 
 #endif // TREEVIEWER_H

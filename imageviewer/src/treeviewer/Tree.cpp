@@ -2,15 +2,14 @@
 
 
 
-Tree::Tree(int v, Tree* parent) : label(v), parent(parent) {}
+Tree::Tree(QWidget *w, Tree* p) : label(w), parent(p) {}
 
 /**
- * Copie profonde
+ * Deep copy
  * @warning call this only on root
- * @brief Tree::Tree
  * @param t the root
  */
-Tree::Tree(Tree const& t) : label(t.label), parent(t.parent){
+Tree::Tree(Tree const& t) : label(t.label.parentWidget()), parent(t.parent){
     for (Tree* c : t){
         children.push_back(new Tree(*c));
     }
@@ -48,7 +47,7 @@ const Tree& Tree::getChild(int index) const{
     return *children[index];
 }
 
-int Tree::getValue() const{
+QPushButton const& Tree::getLabel() const{
     return label;
 }
 
@@ -56,8 +55,7 @@ void Tree::setParent(Tree *p){
     parent = p;
 }
 
-void Tree::setValue(int l){
-    label = l;
+void Tree::setLabel(QPushButton const& p){
 }
 
 void Tree::addChild(Tree *child){
@@ -89,7 +87,8 @@ std::vector<Tree*>::const_iterator Tree::cend() const{
 
 Tree& Tree::operator = (Tree const& t){
     if (this != &t) {
-        label = t.label;
+
+        setLabel(t.label);
         parent = t.parent;
         for (Tree* c : children) {
           delete c;

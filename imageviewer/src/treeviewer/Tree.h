@@ -7,8 +7,8 @@
 class Tree
 {
 public:
-   // Tree(QWidget *parent);
-    Tree(int v=0, Tree* parent = nullptr);
+
+    Tree(QWidget *w, Tree* parent = nullptr);
     Tree(Tree const& t);
 
     ~Tree();
@@ -16,10 +16,10 @@ public:
     std::vector<Tree*> const& getChildren();
     const Tree& getParent() const;
     const Tree& getChild(int index) const;
-    int getValue() const;
+    QPushButton const& getLabel() const;
 
     void setParent(Tree *parent);
-    void setValue(int label);
+    void setLabel(QPushButton const& p);
 
     void addChild(Tree *t);
 
@@ -37,8 +37,7 @@ public:
 
 
 private:
-    //QPushButton *label;
-    int label;
+    QPushButton label;
     Tree* parent;
     std::vector<Tree*> children;
 };
