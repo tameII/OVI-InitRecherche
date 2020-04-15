@@ -12,6 +12,8 @@
 #include <vtkPoints.h>
 #include <vtkCellArray.h>
 
+#include "../model/point/PointModel.h"
+
 class vtkBorderWidget;
 
 #include "ui_BorderWidgetQt.h"
@@ -31,6 +33,7 @@ public:
 
 private slots:
     void drawDICOMSeries(std::string folderDICOM);
+    void drawPointForSlide(int slide);
 
 //    void on_sliderSlices_sliderMoved(int posicion);
 
@@ -41,8 +44,7 @@ private:
     int minSlice;
     int maxSlice;
     vtkSmartPointer<vtkBorderWidget> BorderWidget;
-    vtkSmartPointer<vtkPoints> points;
-    vtkSmartPointer<vtkCellArray> lineIndices;
+    PointModel *pointModel;
 };
 
 #endif
