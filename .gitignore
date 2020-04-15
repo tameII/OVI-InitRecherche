@@ -1,4 +1,5 @@
 imageviewer/CMakeLists.txt.user
+imageviewer/CMakeLists.txt
 
 # C++ objects and libs
 *.slo
