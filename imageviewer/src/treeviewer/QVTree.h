@@ -12,7 +12,7 @@ public:
     explicit QVTree(QWidget *parent = nullptr);
 
 private:
-     Tree *root;
+     Tree root;
 
 };
 
