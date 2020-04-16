@@ -2,11 +2,19 @@
 #define TREE_H
 
 #include <cassert>
+#include <cmath>
 #include <QPushButton>
+
 
 class Tree
 {
 public:
+
+    static constexpr int NODE_SIZE = 30;
+    static constexpr int MARGIN_X = 16;
+    static constexpr int MARGIN_Y = 16;
+
+
 
     Tree(QWidget *w, Tree* parent = nullptr);
     Tree(Tree const& t);
@@ -22,6 +30,8 @@ public:
     void setLabel(QPushButton const& p);
 
     void addChild(Tree *t);
+
+    void replaceChildren();
 
     std::vector<Tree*>::iterator begin();
     std::vector<Tree*>::const_iterator begin() const;

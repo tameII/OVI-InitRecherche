@@ -67,6 +67,9 @@ set(COMPILE_LIST
         src/treeviewer/Tree.h
         src/treeviewer/view/TreeViewer.cpp
         src/treeviewer/view/TreeViewer.h
+        src/treeviewer/view/TreeView.cpp
+        src/treeviewer/view/TreeView.h
+
 )
 
 set(UI_LIST

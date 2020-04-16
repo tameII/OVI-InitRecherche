@@ -1,8 +1,15 @@
 #include "Tree.h"
+#include <iostream>
 
-
-
-Tree::Tree(QWidget *w, Tree* p) : label(w), parent(p) {}
+/**
+ * @brief Tree::Tree use this to create the root, then use addChildren to add children
+ * @param w the widget parent
+ * @param p the parent of the tree
+ */
+Tree::Tree(QWidget *w, Tree* p) : label(w), parent(p) {
+    //placement de root
+    label.setGeometry(w->width()/2 - NODE_SIZE/2, 0, NODE_SIZE, NODE_SIZE);
+}
 
 /**
  * Deep copy
@@ -10,9 +17,12 @@ Tree::Tree(QWidget *w, Tree* p) : label(w), parent(p) {}
  * @param t the root
  */
 Tree::Tree(Tree const& t) : label(t.label.parentWidget()), parent(t.parent){
+
+    label.setGeometry(t.label.geometry());
     for (Tree* c : t){
         children.push_back(new Tree(*c));
     }
+    replaceChildren();
 }
 
 Tree::~Tree(){
@@ -55,7 +65,10 @@ void Tree::setParent(Tree *p){
     parent = p;
 }
 
+
 void Tree::setLabel(QPushButton const& p){
+      label.setGeometry(p.geometry());
+      replaceChildren();
 }
 
 void Tree::addChild(Tree *child){
@@ -64,7 +77,39 @@ void Tree::addChild(Tree *child){
 
     child->parent = this;
     children.push_back(child);
+    replaceChildren();
 }
+
+
+void Tree::replaceChildren(){
+
+    int nodeWidth = NODE_SIZE;
+    int nodeHeight = NODE_SIZE;
+    int parentX = label.pos().x() + nodeWidth / 2;
+    int parentY = label.pos().y() + nodeHeight / 2;
+    int nbChilds = children.size();
+
+    int step = (nbChilds - 1) / 2 * -1;
+    int extra = (nbChilds % 2 == 0) ? (-1) : (0);
+    bool extraStep = nbChilds % 2 == 0;
+    for(Tree *c : children){
+         std::cout << step << std::endl;
+
+        int x = parentX + step*(nodeWidth + MARGIN_X) + (nodeWidth / 2 + MARGIN_X / 2) * extra;
+        int y = parentY + nodeHeight + MARGIN_Y;
+        c->label.setGeometry(x - nodeWidth/2, y - nodeHeight/2, nodeWidth, nodeHeight);
+        c->replaceChildren();
+
+        if (step == 0 && extraStep) {
+            extraStep = false;
+            extra = -extra;
+        } else {
+           step++;
+        }
+    }
+
+}
+
 
 std::vector<Tree*>::iterator Tree::begin(){
     return children.begin();
@@ -87,14 +132,14 @@ std::vector<Tree*>::const_iterator Tree::cend() const{
 
 Tree& Tree::operator = (Tree const& t){
     if (this != &t) {
-
-        setLabel(t.label);
         parent = t.parent;
         for (Tree* c : children) {
           delete c;
         }
         children = t.children;
+        setLabel(t.label);
       }
+
       return *this;
 }
 

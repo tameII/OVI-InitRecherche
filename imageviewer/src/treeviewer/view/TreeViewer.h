@@ -4,7 +4,7 @@
 #include <QMainWindow>
 #include <QImage>
 
-#include "../QVTree.h"
+#include "TreeView.h"
 
 QT_BEGIN_NAMESPACE
 class QAction;
@@ -32,7 +32,7 @@ private:
 
     QImage image;
     QLabel *imageLabel;
-    QScrollArea *scrollArea;
+
     double scaleFactor = 1;
 
     QAction *saveAsAct;
@@ -43,7 +43,7 @@ private:
     QAction *normalSizeAct;
     QAction *fitToWindowAct;
 
-    Tree root;
+    TreeView view;
 
 };
 

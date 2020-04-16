@@ -7,37 +7,17 @@
 #include <QImageReader>
 #include <QImageWriter>
 #include <QLabel>
-#include <QMenuBar>
-#include <QMessageBox>
-#include <QMimeData>
-#include <QPainter>
-#include <QScreen>
-#include <QScrollArea>
-#include <QScrollBar>
-#include <QStandardPaths>
-#include <QStatusBar>
+
 
 TreeViewer::TreeViewer(QWidget *parent)
-   : QMainWindow(parent), imageLabel(new QLabel), root(this)
-   , scrollArea(new QScrollArea)
+   : QMainWindow(parent), imageLabel(new QLabel)
 {
+
     imageLabel->setBackgroundRole(QPalette::Base);
     imageLabel->setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Ignored);
     imageLabel->setScaledContents(true);
 
-//    scrollArea->setBackgroundRole(QPalette::Dark);
-//    scrollArea->setWidget(imageLabel);
-//    scrollArea->setVisible(false);
-//    setCentralWidget(scrollArea);
-
-//    //Initialize the tree
-
-root.addChild(new Tree(this));
-root.addChild(new Tree(this));
-
-    //createActions();
-
-//    resize(QGuiApplication::primaryScreen()->availableSize() * 3 / 5);
+    setCentralWidget(&view);
 
 
 }
