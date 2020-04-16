@@ -12,7 +12,7 @@
 #include <vtkPoints.h>
 #include <vtkCellArray.h>
 
-#include "../model/point/PointModel.h"
+#include "../../mainview/model/point/PointModel.h"
 
 class vtkBorderWidget;
 

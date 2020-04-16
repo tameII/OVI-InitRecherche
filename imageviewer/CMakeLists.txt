@@ -55,11 +55,6 @@ set(COMPILE_LIST
         src/imageviewer/vtkwidget/BorderWidgetQt.h
         src/imageviewer/view/ImageViewer.cpp
         src/imageviewer/view/ImageViewer.h
-        src/imageviewer/model/point/PointModel.cpp
-        src/imageviewer/model/point/PointModel.h
-
-        src/mainview/view/MainView.cpp
-        src/mainview/view/MainView.h
 
         src/treeviewer/Tree.cpp
         src/treeviewer/Tree.h
@@ -67,6 +62,11 @@ set(COMPILE_LIST
         src/treeviewer/view/TreeViewer.h
         src/treeviewer/view/TreeView.cpp
         src/treeviewer/view/TreeView.h
+
+        src/mainview/model/point/PointModel.cpp
+        src/mainview/model/point/PointModel.h
+        src/mainview/view/MainView.cpp
+        src/mainview/view/MainView.h
 
 )
 

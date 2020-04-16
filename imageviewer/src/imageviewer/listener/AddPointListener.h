@@ -15,7 +15,7 @@
 
 
 #include "../vtkwidget/BorderWidgetQt.h"
-#include "../model/point/PointModel.h"
+#include "../../mainview/model/point/PointModel.h"
 
 class AddPointListener : public vtkInteractorStyleImage
 {

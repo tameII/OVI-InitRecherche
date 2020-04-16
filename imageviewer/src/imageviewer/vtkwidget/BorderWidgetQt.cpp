@@ -153,6 +153,11 @@ void BorderWidgetQt::drawDICOMSeries(std::string folderDICOM) {
 
 }
 
+
+/**
+ * @brief BorderWidgetQt::sliceSlider set the slice number position to being rendered
+ * @param position the slice number
+ */
 void BorderWidgetQt::sliceSlider(int position) {
     std::cout << "Position : " << position << std::endl;
     drawPointForSlide(position);
