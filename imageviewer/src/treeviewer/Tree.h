@@ -50,6 +50,7 @@ private:
     QPushButton label;
     Tree* parent;
     std::vector<Tree*> children;
+    //TODO AJouter le numéro de slide
 };
 
 #endif // TREE_H

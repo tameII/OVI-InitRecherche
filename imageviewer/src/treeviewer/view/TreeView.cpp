@@ -4,13 +4,70 @@
 TreeView::TreeView() : root(this) {
         //Initialize the tree
         Tree* child1 = new Tree(this, &root);
+        Tree* child2 = new Tree(this, child1);
+        Tree* child3 = new Tree(this, child2);
+        Tree* child4 = new Tree(this, child3);
+        Tree* child5 = new Tree(this, child4);
+        Tree* child6 = new Tree(this, child5);
+        Tree* child7_1 = new Tree(this, child6);
+        Tree* child7_2 = new Tree(this, child6);
+        Tree* child7_3 = new Tree(this, child6);
+        Tree* child8 = new Tree(this, child7_1);
+        Tree* child9 = new Tree(this, child8);
+        Tree* child10 = new Tree(this, child9);
+        Tree* child11 = new Tree(this, child10);
+        Tree* child12 = new Tree(this, child11);
+        Tree* child13 = new Tree(this, child12);
+        Tree* child14 = new Tree(this, child13);
+
+       child13->addChild(child14);
+
+       child12->addChild(child13);
+
+       child11->addChild(child12);
+
+       child10->addChild(child11);
+
+       child9->addChild(child10);
+
+       child8->addChild(child9);
+
+       child7_1->addChild(child8);
+
+//        //Problème lié au placement naïf:
+//        child7_1->addChild(new Tree(this));
+
+//        child7_2->addChild(new Tree(this));
+//        child7_2->addChild(new Tree(this));
+//        child7_2->addChild(new Tree(this));
+
+//        child7_3->addChild(new Tree(this));
+//        //Fin problème lié au placement naïf
+
+        child6->addChild(child7_1);
+        child6->addChild(child7_2);
+        child6->addChild(child7_3);
+
+        child5->addChild(child6);
+
+        child4->addChild(child5);
+
+        child3->addChild(new Tree(this));
+        child3->addChild(child4);
+
+        child2->addChild(new Tree(this));
+        child2->addChild(new Tree(this));
+        child2->addChild(new Tree(this));
+        child2->addChild(child3);
+
+        child1->addChild(child2);
         child1->addChild(new Tree(this));
         child1->addChild(new Tree(this));
         child1->addChild(new Tree(this));
         child1->addChild(new Tree(this));
+        child1->addChild(new Tree(this));
+
         root.addChild(child1);
-        root.addChild(new Tree(this));
-        root.addChild(new Tree(this));
         root.addChild(new Tree(this));
         root.addChild(new Tree(this));
         root.addChild(new Tree(this));
@@ -27,7 +84,7 @@ Tree& TreeView::getTree() {
  * @param event used like the QPainter parameter
  */
 void TreeView::paintEvent(QPaintEvent* event) {
-//    QScrollArea::paintEvent(event);   // super
+    QScrollArea::paintEvent(event);   // super
     //draw lines
     QPainter painter(this->viewport());
     painter.setPen(QPen(Qt::black, 2));

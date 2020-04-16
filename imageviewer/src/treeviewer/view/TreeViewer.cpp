@@ -4,4 +4,5 @@ TreeViewer::TreeViewer(QWidget *parent)
    : QMainWindow(parent){
 
     setCentralWidget(&view);
+
 }
