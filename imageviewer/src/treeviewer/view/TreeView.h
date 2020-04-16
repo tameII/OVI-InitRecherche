@@ -10,10 +10,12 @@ class TreeView : public QScrollArea {
 
    private :
       Tree root;
+
    public :
       TreeView();
       Tree& getTree();
       void draw(QPainter& painter, Tree const& toDraw);
+
    protected :
       void paintEvent(QPaintEvent* event) override;
 

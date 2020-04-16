@@ -51,7 +51,7 @@ const Tree& Tree::getParent() const{
 
 /**
  * @param index the index of the children
- * @return children[index]
+ * @return *children[index]
  */
 const Tree& Tree::getChild(int index) const{
     return *children[index];
@@ -65,12 +65,20 @@ void Tree::setParent(Tree *p){
     parent = p;
 }
 
-
+/**
+ * @brief Tree::setLabel set the geometry of the label to the geometry of label p
+ * @param p the label wich will replace the position and shape of "label"
+ *
+ */
 void Tree::setLabel(QPushButton const& p){
       label.setGeometry(p.geometry());
       replaceChildren();
 }
 
+/**
+ * @brief Tree::addChild add *child to the childs of the tree if it exist and this != child
+ * @param child a Tree
+ */
 void Tree::addChild(Tree *child){
     assert(child != nullptr);
     assert(this != child);
@@ -80,7 +88,9 @@ void Tree::addChild(Tree *child){
     replaceChildren();
 }
 
-
+/**
+ * @brief Tree::replaceChildren place on screen all the children of the node given the position of itself
+ */
 void Tree::replaceChildren(){
 
     int nodeWidth = NODE_SIZE;
