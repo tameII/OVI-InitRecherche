@@ -61,8 +61,6 @@ set(COMPILE_LIST
         src/mainview/view/MainView.cpp
         src/mainview/view/MainView.h
 
-        src/treeviewer/QVTree.cpp
-        src/treeviewer/QVTree.h
         src/treeviewer/Tree.cpp
         src/treeviewer/Tree.h
         src/treeviewer/view/TreeViewer.cpp
