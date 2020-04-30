@@ -12,9 +12,11 @@ Tree::Tree(QWidget *w, Tree* p, int slideNumber) : label(w), parent(p) {
     connect(&label, &QPushButton::clicked, this, &Tree::buttonClicked);
 }
 
+
 void Tree::buttonClicked(){
-    std::cout << "Vous venez de cliquer sur un bouton." << std::endl;
-    selected(this);
+    std::cout << "Vous venez de cliquer sur un bouton. début du SIGNAL:" << std::endl;
+    getLabel().setText("Selecting button...");
+    selected(this); //SIGNAL
 }
 
 /**
@@ -93,8 +95,11 @@ void Tree::setLabel(QPushButton const& p){
  *
  */
 void Tree::setSelected(Tree *selectedTree){
-
-
+    if(getLabel().text() == "Selecting button..."){
+        label.setText("S");
+    }else{
+        label.setText("");
+    }
     for(Tree *c : children) {
         c->setSelected(selectedTree);
     }
@@ -143,7 +148,6 @@ void Tree::replaceChildren(){
            step++;
         }
     }
-
 }
 
 

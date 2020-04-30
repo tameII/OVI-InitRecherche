@@ -5,31 +5,17 @@ TreeView::TreeView() : root(this), slide(-1) {
 
     connect(&root, &Tree::selected, this, &TreeView::buttonClicked);
     selectedNode = &root;
-
-    //Initialize the tree  (example)
-//    Tree* child1 = new Tree(this, selectedNode);
-//    Tree* child2 = new Tree(this, child1);
-//    Tree* child3 = new Tree(this, child2);
-
-//    child2->addChild(child3);
-//    child1->addChild(child2);
-//    selectedNode->addChild(child1);
-
-
-
 }
 
-//Créé deux nouveaux noeud si la currentSlide n'a pas changé,
+//Créé deux nouveaux noeud si la currentSlide n'a pas changé
 void TreeView::updateView(int currentSlide){
-      std::cout << "UPDATE: slide = " << slide << " Et currentSlide = " << currentSlide << std::endl;
 
     if(currentSlide == slide){ //currentSlide does not change, we create two node
-        Tree* child1 = new Tree(this, selectedNode);
-        Tree* child2 = new Tree(this, selectedNode);
+        Tree* child1 = new Tree(this, selectedNode, currentSlide);
+        Tree* child2 = new Tree(this, selectedNode, currentSlide);
 
         connect(child1, &Tree::selected, this, &TreeView::buttonClicked);
         connect(child2, &Tree::selected, this, &TreeView::buttonClicked);
-
 
         selectedNode->addChild(child2);
         selectedNode->addChild(child1);
@@ -37,19 +23,22 @@ void TreeView::updateView(int currentSlide){
         child1->getLabel().show();
         child2->getLabel().show();
 
-        //Je choisis arbitrairement l'un des child comme nouveau vaisseau selectionné (le 2)
-       // selectedNode = child2;
-
-        slide = -1;
+        //Il est possible de choisir arbitrairement le nouveau noeud selectionné
+       // setSelected(child2);
     }else{
         slide = currentSlide;
     }
 }
 
 
-void TreeView::buttonClicked(Tree *t){
-    std::cout << "TreeView vient de recevoir le signal : buttonClicked" << std::endl;
 
+void TreeView::buttonClicked(Tree *t){
+    setSelected(t);
+
+}
+void TreeView::setSelected(Tree *t){
+    selectedNode = t;
+    getTree().setSelected(t);
 }
 
 Tree& TreeView::getTree() {

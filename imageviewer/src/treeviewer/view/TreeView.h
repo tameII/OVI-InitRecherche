@@ -9,7 +9,6 @@ class TreeView : public QScrollArea {
    Q_OBJECT
 
    private slots:
-//        virtual void handleButton(Tree *t);
         void buttonClicked(Tree *t);
 
    private :
@@ -22,6 +21,7 @@ class TreeView : public QScrollArea {
       void updateView(int currentSlide);
       Tree& getTree();
       void draw(QPainter& painter, Tree& toDraw);
+      void setSelected(Tree *t);
 
 
 
