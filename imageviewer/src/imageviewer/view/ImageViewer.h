@@ -10,6 +10,7 @@
 #include <dirent.h>
 
 #include "../vtkwidget/BorderWidgetQt.h"
+#include "../../utility/observer/Observer.h"
 
 QT_BEGIN_NAMESPACE
 class QAction;
@@ -20,7 +21,7 @@ class QScrollBar;
 QT_END_NAMESPACE
 
 //! [0]
-class ImageViewer : public QMainWindow
+class ImageViewer : public QMainWindow, public Observer
 {
     Q_OBJECT
 
@@ -29,7 +30,8 @@ public:
     bool loadFile(const QString &);
     void createActions();
     void setImage(int num);
-
+    void setPointModel(PointModel *pM);
+    virtual void update(Observable *o, void* arg);
 
 public slots:
     void open();

@@ -54,6 +54,7 @@ vtkStandardNewMacro(AddPointListener);
 BorderWidgetQt::BorderWidgetQt()
 {
   this->setupUi(this);
+  this->pointModel = new PointModel(0);
 
   reader = vtkSmartPointer<vtkDICOMImageReader>::New();
   viewer = vtkSmartPointer<vtkImageViewer2>::New();
@@ -62,15 +63,11 @@ BorderWidgetQt::BorderWidgetQt()
 //  viewer->SetDebug(true);
 
 
-  pointModel = new PointModel(0);
 
 //  vtkNew<vtkNamedColors> colors;
-
 //  vtkNew<vtkGenericOpenGLRenderWindow> renderWindow;
-
 //  this->qvtkWidget->SetRenderWindow(renderWindow);
-
-  //  renderer->SetBackground(colors->GetColor3d("Black").GetData());
+//  renderer->SetBackground(colors->GetColor3d("Black").GetData());
 
   // Connect VTK with Qt
 //  this->qvtkWidget->GetRenderWindow()->AddRenderer(renderer);
@@ -132,8 +129,9 @@ void BorderWidgetQt::drawDICOMSeries(std::string folderDICOM) {
     vtkSmartPointer<vtkPointPicker> pointPicker =
       vtkSmartPointer<vtkPointPicker>::New();
 
-    this->pointModel = new PointModel(maxSlice);
-
+    //TODO trouver une solution pour mettre a jour les points models des parties liées
+    //PointModel = new PointModel(maxSlice);
+    pointModel->setNewPointModel(maxSlice);
     vtkSmartPointer<AddPointListener> style = vtkSmartPointer<AddPointListener>::New();
     style->setPointModel(pointModel);
 
@@ -169,7 +167,7 @@ void BorderWidgetQt::sliceSlider(int position) {
 
 void BorderWidgetQt::drawPointForSlide(int slide){
     //Remove all actor from previous slide
-    std::cout << "Curerent Slide : " << pointModel->getCurrentSlide() << std::endl;
+    std::cout << "Current Slide : " << pointModel->getCurrentSlide() << std::endl;
     std::cout << "Number of Actor : " << pointModel->getNbPointForSlide(pointModel->getCurrentSlide()) << std::endl;
 
     std::list<vtkSmartPointer<vtkActor2D>> actors = pointModel->getPointToSlide().find(pointModel->getCurrentSlide())->second;
@@ -184,4 +182,8 @@ void BorderWidgetQt::drawPointForSlide(int slide){
     }
 
     //Add actor (if exist) form the target slides
+}
+
+void BorderWidgetQt::setPointModel(PointModel *pM){
+    pointModel = pM;
 }

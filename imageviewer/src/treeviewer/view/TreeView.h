@@ -8,13 +8,22 @@
 class TreeView : public QScrollArea {
    Q_OBJECT
 
+   private slots:
+//        virtual void handleButton(Tree *t);
+        void buttonClicked(Tree *t);
+
    private :
       Tree root;
+      Tree *selectedNode;
+      int slide;
 
    public :
       TreeView();
+      void updateView(int currentSlide);
       Tree& getTree();
-      void draw(QPainter& painter, Tree const& toDraw);
+      void draw(QPainter& painter, Tree& toDraw);
+
+
 
    protected :
       void paintEvent(QPaintEvent* event) override;

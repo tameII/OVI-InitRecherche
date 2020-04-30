@@ -4,10 +4,18 @@
 #include <cassert>
 #include <cmath>
 #include <QPushButton>
+#include <QWidget>
 
-
-class Tree
+class Tree : public QObject
 {
+    Q_OBJECT
+
+private slots:
+    void buttonClicked();
+
+signals:
+    void selected(Tree *t);
+
 public:
 
     static constexpr int NODE_SIZE = 30;
@@ -16,18 +24,20 @@ public:
 
 
 
-    Tree(QWidget *w, Tree* parent = nullptr);
+    Tree(QWidget *w, Tree* parent = nullptr, int slideNumber = 0);
     Tree(Tree const& t);
 
     ~Tree();
-
     std::vector<Tree*> const& getChildren();
     const Tree& getParent() const;
-    const Tree& getChild(int index) const;
-    QPushButton const& getLabel() const;
+    Tree& getChild(int index);
+    QPushButton& getLabel();
+    int const getSlide() const;
+
 
     void setParent(Tree *parent);
     void setLabel(QPushButton const& p);
+    void setSelected(Tree *select);
 
     void addChild(Tree *t);
 
@@ -48,9 +58,11 @@ public:
 
 private:
     QPushButton label;
+    int slide;
     Tree* parent;
     std::vector<Tree*> children;
-    //TODO AJouter le numéro de slide
+
+
 };
 
 #endif // TREE_H

@@ -30,6 +30,7 @@ public:
   void openDICOMFolder();
   void sliceSlider(int position);
   void addPointToPointList();
+  void setPointModel(PointModel *pM);
 
 private slots:
     void drawDICOMSeries(std::string folderDICOM);

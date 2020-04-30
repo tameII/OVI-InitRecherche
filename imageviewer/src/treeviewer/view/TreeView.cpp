@@ -1,77 +1,54 @@
 #include "TreeView.h"
 #include <iostream>
 
-TreeView::TreeView() : root(this) {
-        //Initialize the tree
-        Tree* child1 = new Tree(this, &root);
-        Tree* child2 = new Tree(this, child1);
-        Tree* child3 = new Tree(this, child2);
-        Tree* child4 = new Tree(this, child3);
-        Tree* child5 = new Tree(this, child4);
-        Tree* child6 = new Tree(this, child5);
-        Tree* child7_1 = new Tree(this, child6);
-        Tree* child7_2 = new Tree(this, child6);
-        Tree* child7_3 = new Tree(this, child6);
-        Tree* child8 = new Tree(this, child7_1);
-        Tree* child9 = new Tree(this, child8);
-        Tree* child10 = new Tree(this, child9);
-        Tree* child11 = new Tree(this, child10);
-        Tree* child12 = new Tree(this, child11);
-        Tree* child13 = new Tree(this, child12);
-        Tree* child14 = new Tree(this, child13);
+TreeView::TreeView() : root(this), slide(-1) {
 
-       child13->addChild(child14);
+    connect(&root, &Tree::selected, this, &TreeView::buttonClicked);
+    selectedNode = &root;
 
-       child12->addChild(child13);
+    //Initialize the tree  (example)
+//    Tree* child1 = new Tree(this, selectedNode);
+//    Tree* child2 = new Tree(this, child1);
+//    Tree* child3 = new Tree(this, child2);
 
-       child11->addChild(child12);
+//    child2->addChild(child3);
+//    child1->addChild(child2);
+//    selectedNode->addChild(child1);
 
-       child10->addChild(child11);
 
-       child9->addChild(child10);
 
-       child8->addChild(child9);
+}
 
-       child7_1->addChild(child8);
+//Créé deux nouveaux noeud si la currentSlide n'a pas changé,
+void TreeView::updateView(int currentSlide){
+      std::cout << "UPDATE: slide = " << slide << " Et currentSlide = " << currentSlide << std::endl;
 
-//        //Problème lié au placement naïf:
-//        child7_1->addChild(new Tree(this));
+    if(currentSlide == slide){ //currentSlide does not change, we create two node
+        Tree* child1 = new Tree(this, selectedNode);
+        Tree* child2 = new Tree(this, selectedNode);
 
-//        child7_2->addChild(new Tree(this));
-//        child7_2->addChild(new Tree(this));
-//        child7_2->addChild(new Tree(this));
+        connect(child1, &Tree::selected, this, &TreeView::buttonClicked);
+        connect(child2, &Tree::selected, this, &TreeView::buttonClicked);
 
-//        child7_3->addChild(new Tree(this));
-//        //Fin problème lié au placement naïf
 
-        child6->addChild(child7_1);
-        child6->addChild(child7_2);
-        child6->addChild(child7_3);
+        selectedNode->addChild(child2);
+        selectedNode->addChild(child1);
 
-        child5->addChild(child6);
+        child1->getLabel().show();
+        child2->getLabel().show();
 
-        child4->addChild(child5);
+        //Je choisis arbitrairement l'un des child comme nouveau vaisseau selectionné (le 2)
+       // selectedNode = child2;
 
-        child3->addChild(new Tree(this));
-        child3->addChild(child4);
+        slide = -1;
+    }else{
+        slide = currentSlide;
+    }
+}
 
-        child2->addChild(new Tree(this));
-        child2->addChild(new Tree(this));
-        child2->addChild(new Tree(this));
-        child2->addChild(child3);
 
-        child1->addChild(child2);
-        child1->addChild(new Tree(this));
-        child1->addChild(new Tree(this));
-        child1->addChild(new Tree(this));
-        child1->addChild(new Tree(this));
-        child1->addChild(new Tree(this));
-
-        root.addChild(child1);
-        root.addChild(new Tree(this));
-        root.addChild(new Tree(this));
-        root.addChild(new Tree(this));
-
+void TreeView::buttonClicked(Tree *t){
+    std::cout << "TreeView vient de recevoir le signal : buttonClicked" << std::endl;
 
 }
 
@@ -97,7 +74,7 @@ void TreeView::paintEvent(QPaintEvent* event) {
  * @param painter the Picasso responsible to draw beautiful lines
  * @param toDraw The Tree you want to draw
  */
-void TreeView::draw(QPainter& painter, Tree const& toDraw) {
+void TreeView::draw(QPainter& painter, Tree& toDraw) {
    for (Tree* c : toDraw) {
       //Draw line between child and given root
       int x1 = toDraw.getLabel().pos().x() + toDraw.getLabel().width() / 2;
@@ -108,3 +85,4 @@ void TreeView::draw(QPainter& painter, Tree const& toDraw) {
       draw (painter, *c);
    }   
 }
+

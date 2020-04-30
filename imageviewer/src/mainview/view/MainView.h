@@ -48,6 +48,7 @@ private:
     QGroupBox *rightGroupBox;
     ImageViewer *imageViewer;
     TreeViewer *treeViewer;
+    PointModel *pointModel;
     double scaleFactor = 1;
 
 

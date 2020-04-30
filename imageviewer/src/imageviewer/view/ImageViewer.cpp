@@ -19,6 +19,8 @@
 #include <QStatusBar>
 #include <QDebug>
 
+#include <iostream>
+
 ImageViewer::ImageViewer(QWidget *parent) : QMainWindow(parent), imageLabel(new QLabel), scrollArea(new QScrollArea){
 
     QPalette pal = palette();
@@ -198,4 +200,19 @@ void ImageViewer::scaleImage(double factor){
 void ImageViewer::adjustScrollBar(QScrollBar *scrollBar, double factor){
     scrollBar->setValue(int(factor * scrollBar->value()
                             + ((factor - 1) * scrollBar->pageStep()/2)));
+}
+
+/**
+ * @brief ImageViewer::setPointModel call setPointModel(pm) of *border
+ * @param pM the pointModel
+ */
+void ImageViewer::setPointModel(PointModel *pM){
+    border->setPointModel(pM);
+}
+
+/**
+ * @brief ImageViewer::update update BorderWidgetQt, /!\ not implemented YET /!\
+ */
+void ImageViewer::update(Observable *o, void* arg){
+
 }

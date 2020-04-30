@@ -6,9 +6,15 @@
  * @param w the widget parent
  * @param p the parent of the tree
  */
-Tree::Tree(QWidget *w, Tree* p) : label(w), parent(p) {
+Tree::Tree(QWidget *w, Tree* p, int slideNumber) : label(w), parent(p) {
     //placement de root
     label.setGeometry(w->width()/2 - NODE_SIZE/2, 0, NODE_SIZE, NODE_SIZE);
+    connect(&label, &QPushButton::clicked, this, &Tree::buttonClicked);
+}
+
+void Tree::buttonClicked(){
+    std::cout << "Vous venez de cliquer sur un bouton." << std::endl;
+    selected(this);
 }
 
 /**
@@ -33,6 +39,7 @@ Tree::~Tree(){
 
 }
 
+
 /**
  * @brief getChildren
  * @return the reference of children
@@ -53,13 +60,19 @@ const Tree& Tree::getParent() const{
  * @param index the index of the children
  * @return *children[index]
  */
-const Tree& Tree::getChild(int index) const{
+Tree& Tree::getChild(int index){
     return *children[index];
 }
 
-QPushButton const& Tree::getLabel() const{
+QPushButton& Tree::getLabel(){
     return label;
 }
+
+
+int const Tree::getSlide() const{
+    return slide;
+}
+
 
 void Tree::setParent(Tree *p){
     parent = p;
@@ -74,6 +87,19 @@ void Tree::setLabel(QPushButton const& p){
       label.setGeometry(p.geometry());
       replaceChildren();
 }
+
+/**
+ * @brief Tree::setSelected put the given node to select mode and other to non select mode, need to be used on root first
+ *
+ */
+void Tree::setSelected(Tree *selectedTree){
+
+
+    for(Tree *c : children) {
+        c->setSelected(selectedTree);
+    }
+}
+
 
 /**
  * @brief Tree::addChild add *child to the childs of the tree if it exist and this != child

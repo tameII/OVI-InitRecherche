@@ -8,8 +8,9 @@
 #include <list>
 #include <iterator>
 
+#include "../../utility/observable/Observable.h"
 
-class PointModel
+class PointModel : public Observable
 {
 public:
     PointModel(int nbSlide);
@@ -18,6 +19,7 @@ public:
     int getNbPointForSlide(int sile);
     void setCurrentSlide(int currentSlide){this->currentSlide = currentSlide;}
     int getCurrentSlide(){return this->currentSlide;}
+    void setNewPointModel(int nbSlide);
 
 private:
     int nbSlide;

@@ -32,8 +32,6 @@ void MainView::createGridGroupBox()
     imageViewer = new ImageViewer();
     treeViewer = new TreeViewer();
 
-    //TODO : Set le PointModel ici
-
     leftGroupBox = new QGroupBox(tr("TreeViewer"));
     QGridLayout *layoutLeft = new QGridLayout;
     layoutLeft->addWidget(treeViewer, 0, 0);
@@ -54,6 +52,12 @@ void MainView::createGridGroupBox()
 
 
     this->setLayout(layoutMain);
+
+
+    pointModel = new PointModel(0);
+    pointModel->add(treeViewer);
+    pointModel->add(imageViewer);
+    imageViewer->setPointModel(pointModel);
 
 }
 

@@ -98,6 +98,7 @@ class AddPointListener : public vtkInteractorStyleImage
     void setPointModel(PointModel *pM){
         this->pointModel = pM;
     }
+
     private:
         PointModel *pointModel = nullptr;
 
