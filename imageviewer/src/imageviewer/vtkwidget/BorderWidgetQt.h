@@ -17,7 +17,13 @@
 class vtkBorderWidget;
 
 #include "ui_BorderWidgetQt.h"
-
+class MyDICOMReader : public vtkDICOMImageReader
+{
+public:
+    MyDICOMReader();
+    MyDICOMReader* New();
+    const char * publicDICOMFileName(int index);
+};
 class BorderWidgetQt : public QMainWindow, private Ui::BorderWidgetQt
 {
   Q_OBJECT
@@ -30,6 +36,8 @@ public:
   void openDICOMFolder();
   void sliceSlider(int position);
   void addPointToPointList();
+  MyDICOMReader* getReader();
+  int getSlice();
 
 private slots:
     void drawDICOMSeries(std::string folderDICOM);
@@ -39,7 +47,7 @@ private slots:
 
 private:
 //    Ui::BorderWidgetQt *ui;
-    vtkSmartPointer<vtkDICOMImageReader> reader;
+    MyDICOMReader* reader;
     vtkSmartPointer<vtkImageViewer2> viewer;
     int minSlice;
     int maxSlice;

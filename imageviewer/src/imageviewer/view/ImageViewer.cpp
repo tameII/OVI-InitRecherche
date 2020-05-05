@@ -77,8 +77,8 @@ bool ImageViewer::loadFile(const QString &folderPath){
 }
 
 void ImageViewer::setImage(int num){
-    fileName->setText(dcmFiles.at(num));
     border->sliceSlider(num);
+    fileName->setText(border->getReader()->publicDICOMFileName(num));
 }
 
 bool ImageViewer::saveFile(const QString &fileName){
@@ -198,4 +198,14 @@ void ImageViewer::scaleImage(double factor){
 void ImageViewer::adjustScrollBar(QScrollBar *scrollBar, double factor){
     scrollBar->setValue(int(factor * scrollBar->value()
                             + ((factor - 1) * scrollBar->pageStep()/2)));
+}
+
+MyDICOMReader* BorderWidgetQt::getReader(){
+    return this->reader;
+
+}
+
+int BorderWidgetQt::getSlice(){
+    //reader->GetDICOMFileName(0);
+    return viewer->GetSlice();
 }

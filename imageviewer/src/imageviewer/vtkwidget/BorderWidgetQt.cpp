@@ -48,6 +48,16 @@ public:
 };
 
 
+MyDICOMReader::MyDICOMReader():vtkDICOMImageReader(){}
+
+MyDICOMReader * MyDICOMReader::New(){
+    return new MyDICOMReader();
+}
+
+const char * MyDICOMReader::publicDICOMFileName(int index){
+    return this->GetDICOMFileName(index);
+}
+
 vtkStandardNewMacro(AddPointListener);
 
 // Constructor
@@ -55,7 +65,7 @@ BorderWidgetQt::BorderWidgetQt()
 {
   this->setupUi(this);
 
-  reader = vtkSmartPointer<vtkDICOMImageReader>::New();
+  reader = new MyDICOMReader;
   viewer = vtkSmartPointer<vtkImageViewer2>::New();
 
 //  reader->SetDebug(true);
