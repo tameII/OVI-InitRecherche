@@ -20,11 +20,13 @@ public:
     void setCurrentSlide(int currentSlide){this->currentSlide = currentSlide;}
     int getCurrentSlide(){return this->currentSlide;}
     void setNewPointModel(int nbSlide);
+    bool isNew() const;
 
 private:
     int nbSlide;
     int currentSlide = 0;
     std::map<int, std::list<vtkSmartPointer<vtkActor2D>>> pointToSlide;
+    bool newModel; //Usefull to know when we had created a new model
 
 };
 

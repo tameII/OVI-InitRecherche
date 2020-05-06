@@ -12,7 +12,8 @@ TreeViewer::TreeViewer(QWidget *parent): QMainWindow(parent)
 
 void TreeViewer::update(Observable *o, void* arg){
     int currentSlide = dynamic_cast<PointModel&>(*o).getCurrentSlide();  //Permet d'accéder au modèle
-    view.updateView(currentSlide);
+    bool newModel = dynamic_cast<PointModel&>(*o).isNew();
+    if(!newModel) view.updateView(currentSlide);
 
 
 }

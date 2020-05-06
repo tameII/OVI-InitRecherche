@@ -1,7 +1,7 @@
 #include "PointModel.h"
 
 
-PointModel::PointModel(int nbSlide) : Observable()
+PointModel::PointModel(int nbSlide) : Observable(), newModel(false)
 {
     this->nbSlide = nbSlide;
     pointToSlide = {};
@@ -21,6 +21,7 @@ void PointModel::addPointToSlide(vtkSmartPointer<vtkActor2D> actor){
 //    std::cout << "Size after adding :  " << actorForslide.size() << std::endl;
     std::cout << "Size after adding :  " << pointToSlide.find(currentSlide)->second.size() << std::endl;
 
+    newModel = false;
     setChanged(true);
     notifyAll();
 }
@@ -40,6 +41,12 @@ void PointModel::setNewPointModel(int nbSlide){
     for(int j =0; j <= nbSlide; j++){
         pointToSlide.insert({j, {}});
     }
+
+    newModel = true;
     setChanged(true);
     notifyAll();
+}
+
+bool PointModel::isNew() const{
+    return newModel;
 }

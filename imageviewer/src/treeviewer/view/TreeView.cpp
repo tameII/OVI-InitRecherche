@@ -1,7 +1,7 @@
 #include "TreeView.h"
 #include <iostream>
 
-TreeView::TreeView() : root(this), slide(-1), newSlide(false) {
+TreeView::TreeView() : root(this), slide(-1) {
 
     connect(&root, &Tree::selected, this, &TreeView::buttonClicked);
     selectedNode = &root;
@@ -9,7 +9,6 @@ TreeView::TreeView() : root(this), slide(-1), newSlide(false) {
 
 //Create a new node
 void TreeView::updateView(int currentSlide){
-    if(newSlide){
         Tree* child1 = new Tree(this, selectedNode, currentSlide);
 
         connect(child1, &Tree::selected, this, &TreeView::buttonClicked);
@@ -17,9 +16,6 @@ void TreeView::updateView(int currentSlide){
         selectedNode->addChild(child1);
 
         child1->getLabel().show();
-    }else{
-        newSlide = true;
-    }
 }
 
 
