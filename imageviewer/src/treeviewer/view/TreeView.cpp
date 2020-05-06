@@ -1,32 +1,24 @@
 #include "TreeView.h"
 #include <iostream>
 
-TreeView::TreeView() : root(this), slide(-1) {
+TreeView::TreeView() : root(this), slide(-1), newSlide(false) {
 
     connect(&root, &Tree::selected, this, &TreeView::buttonClicked);
     selectedNode = &root;
 }
 
-//Créé deux nouveaux noeud si la currentSlide n'a pas changé
+//Create a new node
 void TreeView::updateView(int currentSlide){
-
-    if(currentSlide == slide){ //currentSlide does not change, we create two node
+    if(newSlide){
         Tree* child1 = new Tree(this, selectedNode, currentSlide);
-        Tree* child2 = new Tree(this, selectedNode, currentSlide);
 
         connect(child1, &Tree::selected, this, &TreeView::buttonClicked);
-        connect(child2, &Tree::selected, this, &TreeView::buttonClicked);
 
-        selectedNode->addChild(child2);
         selectedNode->addChild(child1);
 
         child1->getLabel().show();
-        child2->getLabel().show();
-
-        //Il est possible de choisir arbitrairement le nouveau noeud selectionné
-       // setSelected(child2);
     }else{
-        slide = currentSlide;
+        newSlide = true;
     }
 }
 

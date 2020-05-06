@@ -15,6 +15,7 @@ class TreeView : public QScrollArea {
       Tree root;
       Tree *selectedNode;
       int slide;
+      bool newSlide;
 
    public :
       TreeView();
